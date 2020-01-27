@@ -34,8 +34,11 @@ import math
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# Depencies
+# Dependencies
 import forest_fire
+
+# Magic command to output the window at Ipython interactive terminal
+# %matplotlib qt
 
 class Helicopter(forest_fire.ForestFire):
     """ Helicopter class """
@@ -58,7 +61,7 @@ class Helicopter(forest_fire.ForestFire):
         self.current_reward = 0
         # Render Info
         self.color_tree = np.array([15, 198, 43, int(1.0*255)]) # Green RGBA
-        self.color_empty = np.array([255, 245, 166, int(0.4*255)]) # Beige RGBA
+        self.color_empty = np.array([255, 245, 166, int(1.0*255)]) # Beige RGBA
         self.color_fire = np.array([255, 106, 58, int(1.0*255)]) # Red RGBA
         self.color_helicopter = np.array([64, 18, 1, int(1.0*255)]) # Brown RGBA
         self.grid_to_rgba()
@@ -184,27 +187,17 @@ class Helicopter(forest_fire.ForestFire):
         ax.grid(which='major', color='w', linestyle='-', linewidth=0)
         ax.tick_params(axis=u'both', which=u'both',length=0)
         # Mark the helicopter position
-        plt.scatter(self.pos_col, self.pos_row, marker = 'x', c='red')
+        # Put a soft circle
+#        plt.scatter(self.pos_col, self.pos_row,
+#                    marker='o', color='w',
+#                    s=30, linewidths=8,
+#                    zorder=10, alpha=0.3,)
+        # Put a red X
+        plt.scatter(self.pos_col, self.pos_row,
+                    marker='x', color='red',
+                    s=50, linewidths=50,
+                    zorder=11)
+        plt.show()
 #    def close(self):
 #        pass
-    def random_policy():
-        pass
-
-        
-        
-plt.scatter(centroids[:, 0], centroids[:, 1],
-marker='o', s=30, linewidths=8,
-color=circle_color, zorder=10, alpha=0.9)
-plt.scatter(centroids[:, 0], centroids[:, 1],
-marker='x', s=50, linewidths=50,
-color=cross_color, zorder=11, alpha=1)
-
-
-black_hawk = Helicopter()
-
-black_hawk.render()
-black_hawk.grid
-black_hawk.color_empty
-#black_hawk.rgba_mat
-
 
