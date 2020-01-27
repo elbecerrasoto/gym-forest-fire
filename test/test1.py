@@ -9,8 +9,9 @@ Created on Tue Dec 31 11:37:09 2019
 # Add previous directory to PATH
 # to import helicopter
 import sys
-sys.path.insert(1, '/..')
+sys.path.insert(1, '../module/')
 
+import time
 import numpy as np
 import helicopter
 
@@ -18,7 +19,9 @@ env = helicopter.Helicopter()
 obs1 = env.reset()
 total_reward = 0
 
-for i in range(100):
+# Initial testing
+# Basic movement, rewards and out of borders
+for i in range(10):
     print('\n#### Iteration {} ####'.format(i))
     action = np.random.choice(np.arange(1,10))
     print('OLD POSITION: pos row [{}], pos col[{}]'.format(env.pos_row, env.pos_col))
@@ -29,9 +32,10 @@ for i in range(100):
     reward = res[1]
     total_hits = res[3]['hits']
     total_reward += reward
-    print('OLD POSITION: pos row [{}], pos col[{}]'.format(env.pos_row, env.pos_col))
+    print('NEW POSITION: pos row [{}], pos col[{}]'.format(env.pos_row, env.pos_col))
     print('Total Reward: {}'.format(total_reward))
     print('Total Hits: {}'.format(total_hits))
+    time.sleep(0.5)
 
 
 
