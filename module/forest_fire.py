@@ -1,34 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Class Helicopter
+Created on Sun Jan 26 09:46:22 2020
 
-pos_row = None
-pos_col = None
-freeze = 4
-water = 100
-n_row = 10
-n_col = 20
-p_tree=0.1
-p_fire=0.01
-p_init_tree=0.85
-boundary='reflective'
-tree = '|'
-empty = '.'
-fire = '*'
-
-############
-Methods    #  
-############
-step(action)
-
-
-Created on Sun Dec 29 11:36:25 2019
 @author: ebecerra
 """
 
 import numpy as np
-import math
 import time
 
 class ForestFire():
@@ -175,119 +153,13 @@ class ForestFire():
                     pass
         self.grid = new_grid
         return new_grid
-    def simulate(self):
+    def simulate(self, times=10, delay=0.7):
         i = 1
         print('\n#### Iteration {} ####'.format(i), end='\n\n')
         print(self.grid)
-        while True:
+        while i <= times:
             i += 1
             print('\n#### Iteration {} ####'.format(i), end='\n\n')
             self.update()
             print(self.grid)
             time.sleep(0.7)
-
-class Helicopter(ForestFire):
-    """ Helicopter class """
-    def __init__(self, pos_row = None, pos_col = None, freeze = 4, water = 100,
-                 n_row = 10, n_col = 20,
-                 p_tree=0.1, p_fire=0.01, p_init_tree=0.85,
-                 boundary='reflective', tree = '|', empty = '.', fire = '*'):
-        super().__init__(n_row,n_col,
-             p_tree,p_fire,p_init_tree,
-             boundary,tree,empty,fire)
-        # Helicopter attributes
-        if pos_row is None:
-            self.pos_row = math.ceil(self.n_row/2)
-        if pos_col is None:
-            self.pos_col = math.ceil(self.n_col/2)
-        self.water = water
-        self.freeze = freeze
-        self.defrost = freeze
-        self.hits = 0
-    def step(self, action):
-        """Must return tuple with
-        numpy array, int reward, bool termination, dict info
-        """
-        termination = False
-        if self.defrost != 0:
-            self.new_pos(action)
-            self.hits += self.extinguish_fire()
-            self.defrost -= 1
-            obs = (self.grid, np.array([self.pos_row, self.pos_col]))
-            reward = self.calculate_reward()
-            return (obs, reward, termination, {'hits': self.hits})
-        if self.defrost == 0:
-            self.new_pos(action)
-            self.hits += self.extinguish_fire()
-            # Run fire simulation
-            self.update()
-            self.defrost = self.freeze
-            obs = (self.grid, np.array([self.pos_row, self.pos_col]))
-            reward = self.calculate_reward()
-            return ((obs, reward, termination, {'hits': self.hits}))
-    def calculate_reward(self):
-        reward = 0
-        for row in range(self.n_row):
-            for col in range(self.n_col):
-                if self.grid[row][col] == self.fire:
-                    reward -= 1
-        return reward
-    def new_pos(self, action):
-        self.pos_row = self.pos_row if action == 5\
-            else self.pos_row if self.is_out_borders(action, pos='row')\
-            else self.pos_row - 1 if action in [1,2,3]\
-            else self.pos_row + 1 if action in [7,8,9]\
-            else self.pos_row
-        self.pos_col = self.pos_col if action == 5\
-            else self.pos_col if self.is_out_borders(action, pos='col')\
-            else self.pos_col - 1 if action in [1,4,7]\
-            else self.pos_col + 1 if action in [3,6,9]\
-            else self.pos_col
-        return (self.pos_row, self.pos_col)
-    def is_out_borders(self, action, pos):
-        if pos == 'row':
-            # Check Up movement
-            if action in [1,2,3] and self.pos_row == 0:
-                out_of_border = True
-            # Check Down movement
-            elif action in [7,8,9] and self.pos_row == self.n_row-1:
-                out_of_border = True
-            else:
-                out_of_border = False
-        elif pos == 'col':
-            # Check Left movement
-            if action in [1,4,7] and self.pos_col == 0:
-                out_of_border = True
-            # Check Right movement
-            elif action in [3,6,9] and self.pos_col == self.n_col-1:
-                out_of_border = True
-            else:
-                out_of_border = False
-        else:
-            raise "Argument Error: pos = str 'row'|'col'"
-        return out_of_border
-    def extinguish_fire(self):
-        """Check where the helicopter is
-        then extinguish at that place"""
-        hit = 0
-        row = self.pos_row
-        col = self.pos_col
-        current_cell = self.grid[row][col]
-        if current_cell == self.fire:
-            self.grid[row][col] = self.empty
-            hit = 1
-        return hit
-    def reset(self):
-        # Another random grid
-        self.__init__(self.pos_row,self.pos_col,
-                      self.freeze,self.water,
-                      self.n_row,self.n_col,
-                      self.p_tree,self.p_fire,self.p_init_tree,
-                      self.boundary,self.tree,self.empty,self.fire)
-        # Return first observation
-        return (self.grid, np.array([self.pos_row,self.pos_col]))
-    def render(self):
-        pass
-    def close(self):
-        pass
-
