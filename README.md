@@ -7,7 +7,7 @@ Forest Fire Environment for OpenAI Gym.
 pip install gym
 ```
 
-2. Download and install `gym-forest`
+2. Download and install `gym-forest-fire`
 ```bash
 git clone https://github.com/elbecerrasoto/gym-forest-fire
 cd gym-forest-fire
