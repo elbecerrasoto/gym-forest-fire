@@ -184,4 +184,6 @@ class Helicopter(forest_fire.ForestFire):
                     marker='x', color='red',
                     s=50, linewidths=50,
                     zorder=11)
+        fig = plt.gcf()
         plt.show()
+        return fig

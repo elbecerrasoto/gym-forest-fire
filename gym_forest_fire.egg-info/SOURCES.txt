@@ -1,0 +1,7 @@
+README.md
+setup.py
+gym_forest_fire.egg-info/PKG-INFO
+gym_forest_fire.egg-info/SOURCES.txt
+gym_forest_fire.egg-info/dependency_links.txt
+gym_forest_fire.egg-info/requires.txt
+gym_forest_fire.egg-info/top_level.txt
