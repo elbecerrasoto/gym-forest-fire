@@ -62,3 +62,10 @@ env.close()
 
 print('\nTotal Reward: {}'.format(total_reward))
 ```
+## Images
+
+![Seq0](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq0.svg)
+
+![Seq0](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq0.svg)
+
+![Seq0](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq0.svg)
