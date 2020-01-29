@@ -64,8 +64,16 @@ print('\nTotal Reward: {}'.format(total_reward))
 ```
 ## Images
 
+The red cross marks the position of the helicopter.
+
+**The forest at some time _n_**
 ![Seq0](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq0.svg)
 
-![Seq0](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq0.svg)
+**The forest at some time _n+1_**
+![Seq1](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq1.svg)
 
-![Seq0](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq0.svg)
+**The forest at some time _n+2_**
+![Seq2](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq2.svg)
+
+**The forest at some time _n+3_**
+![Seq3](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq3.svg)
