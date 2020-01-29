@@ -22,10 +22,6 @@ of 16x16 cells, with parameters _f=0.001_ and _p=0.1_
 The control task is to move a helicopter through the lattice,
 to try to extinguish the fire.
 
-starting 7,7
-8 freezeframes
-
-
 ## Running
 Start by importing the package and initializing the environment
 ```python
@@ -67,13 +63,13 @@ print('\nTotal Reward: {}'.format(total_reward))
 The red cross marks the position of the helicopter.
 
 ![Seq0](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq0.svg)
-The forest at some time _n_
+**The forest at some time _t_**
 
 ![Seq1](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq1.svg)
-The forest at some time _n+1_
+**The forest at some time _t+1_**
 
 ![Seq2](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq2.svg)
-The forest at some time _n+2_
+**The forest at some time _t+2_**
 
 ![Seq3](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq3.svg)
-The forest at some time _n+3_
+**The forest at some time _t+3_**
