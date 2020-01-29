@@ -6,4 +6,4 @@ Created on Mon Jan 27 16:32:34 2020
 @author: ebecerra
 """
 
-from gym_foo.envs.foo_env import ForestFireEnv
+from gym_forest_fire.envs.forest_fire_env import ForestFireEnv

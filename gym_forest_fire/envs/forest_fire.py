@@ -10,8 +10,8 @@ import time
 
 class ForestFire():
     """ Forest class """
-    def __init__(self, n_row = 10, n_col = 20,
-                 p_tree=0.1, p_fire=0.01, p_init_tree=0.85,
+    def __init__(self, n_row = 16, n_col = 16,
+                 p_tree=0.01, p_fire=0.001, p_init_tree=0.75,
                  boundary='reflective', tree = '|', empty = '.', fire = '*'):      
         self.n_row = n_row
         self.n_col = n_col

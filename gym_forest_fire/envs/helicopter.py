@@ -28,8 +28,8 @@ import forest_fire
 class Helicopter(forest_fire.ForestFire):
     """ Helicopter class """
     def __init__(self, pos_row = None, pos_col = None, freeze = None, water = 100,
-                 n_row = 20, n_col = 20,
-                 p_tree=0.1, p_fire=0.001, p_init_tree=0.85,
+                 n_row = 16, n_col = 16,
+                 p_tree=0.1, p_fire=0.001, p_init_tree=0.75,
                  boundary='reflective', tree = '|', empty = '.', fire = '*'):
         super().__init__(n_row,n_col,
              p_tree,p_fire,p_init_tree,
@@ -44,7 +44,7 @@ class Helicopter(forest_fire.ForestFire):
         else:
             self.pos_col = pos_col      
         if freeze is None:
-            self.freeze = math.ceil((self.n_row + self.col) / 4)
+            self.freeze = math.ceil((self.n_row + self.n_col) / 4)
         else:
             self.freeze = freeze
         self.defrost = self.freeze
