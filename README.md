@@ -50,9 +50,9 @@ The task is continuing.
 The representation of the lattice is
 a numpy character matrix.
 
-* '**|**' represents a tree
-* '**.**' represents empty
-* '*****' represents fire
+* '|' represents a tree
+* '.' represents empty
+* '*' represents fire
 
 ## Running
 Start by importing the package and initializing the environment
@@ -93,15 +93,15 @@ print('\nTotal Reward: {}'.format(total_reward))
 ## Images
 
 The red cross marks the position of the helicopter.
+
+![A](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq0.svg)
 **The forest at some time _t_**
 
-![Seq0](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq0.svg)
-
+![B](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq1.svg)
 **The forest at some time _t+1_**
-![Seq1](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq1.svg)
 
+![C](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq2.svg)
 **The forest at some time _t+2_**
-![Seq2](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq2.svg)
 
+![D](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq3.svg)
 **The forest at some time _t+3_**
-![Seq3](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq3.svg)
