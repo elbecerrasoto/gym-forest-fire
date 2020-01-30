@@ -20,7 +20,39 @@ The _ForestFire-v0_ environment implements a
 of 16x16 cells, with parameters _f=0.001_ and _p=0.1_
 
 The control task is to move a helicopter through the lattice,
-to try to extinguish the fire.
+to try to extinguish the fire. The helicopter
+has the effect of turning fire cells to empty cells whenever on top of them.
+
+The possible actions to take are 9, either moving one-step into 8 directions,
+or staying at the same place.
+
+Each number from 1 to 9 represents 1 direction.
+
+1. Left-Up
+2. Up
+3. Right-Up
+4. Right
+5. Don't move
+6. Left
+7. Left-Down
+8. Down
+9. Right-Down
+
+The helicopter can move 8 times before the next computation
+of the forest fire automaton. Basically, the helicopter can
+travel half the distance of the forest before the next actualization.
+This roughly represents the helicopter's speed.
+
+The reward scheme is -1 per burning tree at each time.
+
+The task is continuing.
+
+The representation of the lattice is
+a numpy character matrix.
+
+* '|' represents a tree
+* '.' represents empty
+* '*' represents fire
 
 ## Running
 Start by importing the package and initializing the environment
@@ -62,14 +94,17 @@ print('\nTotal Reward: {}'.format(total_reward))
 
 The red cross marks the position of the helicopter.
 
-![Seq0](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq0.svg)
 **The forest at some time _t_**
+![Seq0](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq0.svg)
 
-![Seq1](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq1.svg)
+
 **The forest at some time _t+1_**
+![Seq1](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq1.svg)
 
-![Seq2](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq2.svg)
+
 **The forest at some time _t+2_**
+![Seq2](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq2.svg)
 
-![Seq3](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq3.svg)
+
 **The forest at some time _t+3_**
+![Seq3](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq3.svg)
