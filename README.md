@@ -99,13 +99,13 @@ Some camptures of env.render()
 The red cross marks the position of the helicopter.
 
 ![A](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq0.svg)
-**The forest at some time _t_**
+**The forest at some time _t+0_**
 
 ![B](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq1.svg)
-**The forest at some time _t+1_**
+**The forest at some time _t+8_**
 
 ![C](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq2.svg)
-**The forest at some time _t+2_**
+**The forest at some time _t+16_**
 
 ![D](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq3.svg)
-**The forest at some time _t+3_**
+**The forest at some time _t+24_**
