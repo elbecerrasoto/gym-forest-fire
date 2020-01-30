@@ -26,7 +26,7 @@ has the effect of turning fire cells to empty cells whenever on top of them.
 The possible actions to take are 9, either moving one-step into 8 directions,
 or staying at the same place.
 
-Each number from 1 to 9 represents 1 direction.
+Each number from 1 to 9 represents one direction.
 
 1. Left-Up
 2. Up
@@ -50,9 +50,9 @@ The task is continuing.
 The representation of the lattice is
 a numpy character matrix.
 
-* '|' represents a tree
-* '.' represents empty
-* '*' represents fire
+* '**|**' represents a tree
+* '**.**' represents empty
+* '*****' represents fire
 
 ## Running
 Start by importing the package and initializing the environment
@@ -93,18 +93,15 @@ print('\nTotal Reward: {}'.format(total_reward))
 ## Images
 
 The red cross marks the position of the helicopter.
-
 **The forest at some time _t_**
-![Seq0](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq0.svg)
 
+![Seq0](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq0.svg)
 
 **The forest at some time _t+1_**
 ![Seq1](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq1.svg)
 
-
 **The forest at some time _t+2_**
 ![Seq2](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq2.svg)
-
 
 **The forest at some time _t+3_**
 ![Seq3](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq3.svg)
