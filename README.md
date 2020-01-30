@@ -91,7 +91,7 @@ env.close()
 print('\nTotal Reward: {}'.format(total_reward))
 ```
 ## Images
-
+Some camptures of env.render()
 The red cross marks the position of the helicopter.
 
 ![A](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq0.svg)
