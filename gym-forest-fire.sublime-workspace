@@ -1,0 +1,447 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/home/ebecerra/.config/sublime-text-3/Packages/Anaconda/README.md",
+			"settings":
+			{
+				"buffer_size": 6749,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "gym_forest_fire/envs/forest_fire.py",
+			"settings":
+			{
+				"buffer_size": 7046,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/ebecerra/Dissertation/ex_pro_sub/test.py",
+			"settings":
+			{
+				"buffer_size": 24,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"Insta",
+				"Package Control: Install Package"
+			],
+			[
+				"Debu",
+				"Debugger: Open"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"Package",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Install Package Control"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 462.0,
+		"history":
+		[
+			"import this",
+			"print('Hello')",
+			"pwd",
+			"ls",
+			"pwd"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/ebecerra/Dissertation/gym-forest-fire",
+		"/home/ebecerra/Dissertation/gym-forest-fire/gym_forest_fire",
+		"/home/ebecerra/Dissertation/gym-forest-fire/gym_forest_fire/envs",
+		"/home/ebecerra/Dissertation/gym-forest-fire/gym_forest_fire.egg-info"
+	],
+	"file_history":
+	[
+		"/home/ebecerra/.config/sublime-text-3/Packages/SublimeREPL/SublimeREPL.sublime-settings",
+		"/home/ebecerra/.config/sublime-text-3/Packages/User/SublimeREPL.sublime-settings",
+		"/home/ebecerra/Dissertation/gym-forest-fire/gym_forest_fire/envs/helicopter.py",
+		"/home/ebecerra/Dissertation/gym-forest-fire/gym-forest-fire.sublime-project",
+		"/home/ebecerra/Dissertation/ex_pro_sub/test.py",
+		"/home/ebecerra/Dissertation/ex_pro_sub/test_project.sublime-project",
+		"/home/ebecerra/Dissertation/gym-forest-fire/README.md",
+		"/home/ebecerra/Dissertation/gym-forest-fire/LICENSE.txt",
+		"/home/ebecerra/Dissertation/gym-forest-fire/setup.py",
+		"/home/ebecerra/Desktop/Notas.txt",
+		"/home/ebecerra/Dissertation/testing.csv",
+		"/home/ebecerra/Dissertation/agg_oo_sgskip.py",
+		"/home/ebecerra/Pictures/testing.csv",
+		"/home/ebecerra/Downloads/mas_que_nada.txt",
+		"/home/ebecerra/.config/sublime-text-3/Packages/User/Anaconda.sublime-build",
+		"/home/ebecerra/.conda/environments.txt",
+		"/home/ebecerra/anaconda3/envs/Dissertation/lib/libcairo.la",
+		"/home/ebecerra/Desktop/One_liners.txt",
+		"/home/ebecerra/Desktop/Notes.lyx",
+		"/home/ebecerra/Dissertation/gym-forest-fire_copy/test/test1.py",
+		"/home/ebecerra/Dissertation/gym-tictactoe/README.md",
+		"/home/ebecerra/Dissertation/gym-forest-fire/test/test1.py",
+		"/home/ebecerra/Dissertation/gym-forest-fire/test/quick_and_dirty.py",
+		"/home/ebecerra/Dissertation/2019_09_sep_26_ff/forest_fire_v2.1.py",
+		"/home/ebecerra/Dissertation/2019_11_nov_04/warm_up_04_nov.py",
+		"/home/ebecerra/MCC4/art_bredeer/raw_following.txt",
+		"/home/ebecerra/MCC4/art_bredeer/raw_followers.txt",
+		"/home/ebecerra/Templates/Embedded Python in BASH",
+		"/home/ebecerra/Templates/AssemblyAnyFungi.v1.sh",
+		"/home/ebecerra/MCC4/art_bredeer/2020_12_jan_04.txt",
+		"/media/ebecerra/6DB3-A5B7/Diss/2019_12_dic_17/helicopter.py",
+		"/home/ebecerra/MCC4/art_bredeer/2020_01_jan_04.v2.txt",
+		"/home/ebecerra/MCC4/art_bredeer/2020_01_jan_04.txt",
+		"/home/ebecerra/MCC4/art_bredeer/following.txt",
+		"/home/ebecerra/MCC4/art_bredeer/2019_12_dic_02.v5.txt",
+		"/home/ebecerra/MCC4/art_bredeer/2019_12_dic_02.v4.txt",
+		"/home/ebecerra/MCC4/art_bredeer/2019_12_dic_02.txt",
+		"/home/ebecerra/Dissertation/2019_11_nov_27/building_environment_v1.2.py",
+		"/home/ebecerra/MCC4/art_bredeer/followers.txt",
+		"/home/ebecerra/MCC4/art_bredeer/followers_emanuel_becerra.txt",
+		"/home/ebecerra/Dissertation/2019_09_sep_26/forest_fire_v2.0.py",
+		"/media/ebecerra/2DFD-B9B6/README.isorespin",
+		"/home/ebecerra/MCC4/Playing_R/DATA/cic_plus_cool.csv",
+		"/home/ebecerra/MCC4/Playing_R/DATA/all_cic_cool_hector.csv",
+		"/home/ebecerra/MCC4/Playing_R/DATA/cic_houses_v2_hector.csv",
+		"/home/ebecerra/MCC4/Playing_R/DATA/cic_houses_v2.csv",
+		"/home/ebecerra/R/x86_64-pc-linux-gnu-library/3.6/RColorBrewer/R/RColorBrewer",
+		"/home/ebecerra/MCC4/Playing_R/cic_houses.csv",
+		"/home/ebecerra/MCC4/Playing_R/DATA/cic_houses.csv",
+		"/home/ebecerra/MCC4/Playing_R/joanna_vessels/Unit_DescriptiveStatistics.txt",
+		"/home/ebecerra/MCC4/Playing_R/joanna_vessels/HeyJoannaOpenMe.txt",
+		"/home/ebecerra/MCC4/ML_industria/oct_2019_unsupervised/clase/notas_clase_oct_2019.txt",
+		"/home/ebecerra/Pictures/Wallpapers/Screenshot from 2019-09-17 17-39-04.png.pp3",
+		"/home/ebecerra/brasero-session.log",
+		"/home/ebecerra/Dissertation/2019_09_sep_26/fire_automaton.gif",
+		"/home/ebecerra/Dissertation/2019_09_sep_24/playing_around.py",
+		"/home/ebecerra/Lecture 1 - Probability and Counting _ Statistics 110-KbB0FjPg0mw.en.vtt",
+		"/home/ebecerra/MCC4/analysis/integers/presentation/presentation_1.tex",
+		"/home/ebecerra/.src/bins/gocr-0.52/INSTALL",
+		"/home/ebecerra/.src/bins/gocr-0.52/README",
+		"/home/ebecerra/MCC4/analysis/integers/presentation/analysis_cha_04_whole_exp.tex",
+		"/home/ebecerra/MCC4/analysis/whole_numbers/presentation/beamercolorthemelucid.sty",
+		"/home/ebecerra/MCC4/analysis/whole_numbers/presentation/beamerinnerthemelucid.sty",
+		"/home/ebecerra/MCC4/analysis/whole_numbers/presentation/beamerthemelucid.sty",
+		"/home/ebecerra/MCC4/analysis/whole_numbers/presentation/beamerouterthemelucid.sty",
+		"/home/ebecerra/MCC4/analysis/beamerthemelucid.sty",
+		"/home/ebecerra/MCC4/analysis/whole_numbers/presentation/presentation_4.zip",
+		"/home/ebecerra/MCC4/ml_industry/Link to machine_learning_para_la_industria/Unsupervised/Other/Market_Basket_Intro.ipynb",
+		"/home/ebecerra/Downloads/top_500_forbes.txt",
+		"/home/ebecerra/MCC2/Bikes/todd_w_schneider/nyc-citibike-data-master/analysis/google_maps_cycling_directions_sketch.rb",
+		"/home/ebecerra/MCC2/Bikes/todd_w_schneider/nyc-citibike-data-master/download_raw_data.sh",
+		"/home/ebecerra/MCC3/Neu_Nets/05_29_19_mayo_preprocessing/failing/RABOData.json",
+		"/home/ebecerra/MCC3/Neu_Nets/05_29_19_mayo_preprocessing/copies/jsons/JCData.json",
+		"/home/ebecerra/MCC3/Neu_Nets/05_29_19_mayo_preprocessing/DATA/jsons/ARData.json",
+		"/home/ebecerra/MCC3/Neu_Nets/06_10_19_june_project/becerra_style_clf.ipynb",
+		"/home/ebecerra/Templates/AbyssLoop.sh",
+		"/home/ebecerra/MCC3/machine_learning_para_la_industria/Unsupervised/Other/notas_basket_analysis.txt",
+		"/home/ebecerra/MCC3/Neu_Nets/05_29_19_mayo_preprocessing/PCA_python.py",
+		"/home/ebecerra/MCC3/machine_learning_para_la_industria/Unsupervised/notas_basket_analysis.txt",
+		"/home/ebecerra/MCC3/machine_learning_para_la_industria/Unsupervised/data_sets/wine/wine.csv",
+		"/home/ebecerra/MCC3/machine_learning_para_la_industria/Unsupervised/data_sets/wine/wine.data",
+		"/home/ebecerra/MCC3/machine_learning_para_la_industria/Unsupervised/data_sets/wine/wine.names",
+		"/home/ebecerra/MCC3/machine_learning_para_la_industria/Unsupervised/data_sets/wine.data",
+		"/home/ebecerra/Dissertation/DATA/ecoli_compendium_data/colombos_ecoli_refannot_20151029.txt",
+		"/home/ebecerra/Dissertation/DATA/ecoli_compendium_data/colombos_ecoli_testannot_20151029.txt",
+		"/home/ebecerra/Dissertation/DATA/ecoli_compendium_data/colombos_ecoli_exprdata_20151029.txt",
+		"/home/ebecerra/R/x86_64-pc-linux-gnu-library/3.5/NbClust/NAMESPACE",
+		"/home/ebecerra/R/x86_64-pc-linux-gnu-library/3.5/NbClust/INDEX",
+		"/home/ebecerra/R/x86_64-pc-linux-gnu-library/3.5/NbClust/DESCRIPTION",
+		"/home/ebecerra/R/x86_64-pc-linux-gnu-library/3.5/NbClust/R/NbClust",
+		"/home/ebecerra/MCC3/Neu_Nets/05_29_19_mayo_preprocessing/BSEData_bad_test.json",
+		"/home/ebecerra/MCC3/Neu_Nets/fashion_conv/retazos.py",
+		"/home/ebecerra/Dissertation/DATA/ecoli_compendium_data/editing_01_31_19/colombos_ecoli_exprdata_20151029.txt",
+		"/home/ebecerra/MCC3/Neu_Nets/Etiquetador/BSEData.json",
+		"/home/ebecerra/MCC3/Neu_Nets/Etiquetador/Estilos1 .json",
+		"/home/ebecerra/MCC3/Neu_Nets/Etiquetador/RECOME_1.GSL",
+		"/home/ebecerra/MCC3/Neu_Nets/sentiment/neg.txt",
+		"/home/ebecerra/MCC3/Neu_Nets/sentiment/pos.txt",
+		"/home/ebecerra/MCC2/Bikes/out_single/all_dir.csv",
+		"/home/ebecerra/.bin/plot",
+		"/home/ebecerra/MCC3/hiram_sociedad/nathaniel_rochester.txt",
+		"/home/ebecerra/MCC2/Mining/classification/tree_bikes_top_10.txt",
+		"/home/ebecerra/MCC2/Bikes/paths/maps?f=d&hl=en&saddr=25.04202,121.534761&daddr=25.05202,121.554761&ie=UTF8&0&om=0&output=kml ",
+		"/home/ebecerra/.hidden",
+		"/home/ebecerra/java0.log",
+		"/home/ebecerra/Desktop/stations.json",
+		"/home/ebecerra/MCC2/NeuNets/gerardo/becerra_soto_emanuel_mnist_conv.Rmd",
+		"/home/ebecerra/Downloads/mapa_web_opt_0.txt",
+		"/home/ebecerra/MCC2/Mining/tarea_02_descrip_dat/2018_08_24_R_code/describing_eco_bici_2017.Rmd",
+		"/home/ebecerra/MCC2/Mining/classification/bikes_tree.png",
+		"/home/ebecerra/MCC2/Mining/classification/decision_tree_bikes.txt",
+		"/home/ebecerra/Documents/vigencia_derechos.txt",
+		"/home/ebecerra/MCC2/NeuNets/gerardo/becerra_soto_emanuel_mnist_conv_v01 (copy).html",
+		"/home/ebecerra/MCC2/NeuNets/gerardo/becerra_soto_emanuel_mnist_conv_v01.html",
+		"/home/ebecerra/MCC2/Mining/ejercicios_chap_06/cha_06_v1.log",
+		"/home/ebecerra/MCC2/MachLearn/hector_model.csv",
+		"/home/ebecerra/MCC2/MachLearn/galaxy/dog_and_cats/dog_cat_01.R",
+		"/home/ebecerra/MCC2/MachLearn/2018_08_22_casuchas/eda.R",
+		"/home/ebecerra/MCC2/MachLearn/2018_08_22_casuchas/houses_becerra.v2.R",
+		"/home/ebecerra/Templates/2800.R",
+		"/media/ebecerra/ADATA HD710/UF/RESULTS/584vs1220/PCoA_comparrasions.R",
+		"/home/ebecerra/Templates/functions.R",
+		"/home/ebecerra/Emanuel.PPD",
+		"/home/ebecerra/Downloads/cien_anos_de_soledad.txt",
+		"/home/ebecerra/MCC2/Mining/l_mysql/generating_views_v1.py",
+		"/home/ebecerra/Documents/old_files/bin/plot_helper.R",
+		"/home/ebecerra/Documents/old_files/bin/plot",
+		"/home/ebecerra/MCC2/MachLearn/2018_08_22_casuchas/data/data_description.txt"
+	],
+	"find":
+	{
+		"height": 27.0
+	},
+	"find_in_files":
+	{
+		"height": 247.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/home/ebecerra/.config/sublime-text-3/Packages/Anaconda/README.md",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6749,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6749,
+								6749
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1782.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "gym_forest_fire/envs/forest_fire.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7046,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								128,
+								128
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/home/ebecerra/Dissertation/ex_pro_sub/test.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 24,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 27.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.Debugger":
+	{
+		"height": 271.0
+	},
+	"output.exec":
+	{
+		"height": 485.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 263.0
+	},
+	"pinned_build_system": "",
+	"project": "gym-forest-fire.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 297.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

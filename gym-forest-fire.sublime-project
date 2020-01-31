@@ -1,0 +1,31 @@
+{
+	"build_systems":
+	[
+		{
+			"file_regex": "^[ ]*File \"(...*?)\", line ([0-9]*)",
+			"name": "Anaconda Python Builder",
+			"selector": "source.python",
+			"shell_cmd": "\"/home/ebecerra/anaconda3/envs/Dissertation/bin/python\" -u \"$file\""
+		}
+	],
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "."
+		}
+	],
+	"settings":
+	{
+		"anaconda_linting": true,
+		"anaconda_linting_behaviour": "always",
+		"debug.configurations":
+		[
+		],
+		"pep257": false,
+		"python_interpreter": "~/anaconda3/envs/Dissertation/bin/python",
+		"test_command": "python -m unittest discover",
+		"use_pylint": false,
+		"validate_imports": true
+	}
+}
