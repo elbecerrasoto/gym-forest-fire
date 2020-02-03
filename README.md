@@ -54,7 +54,7 @@ a numpy character matrix.
 * '.' represents empty
 * '*' represents fire
 
-The starting position of the helicopter is 7,7. Just in the middle.
+The starting position of the helicopter is 7,7, just in the middle.
 The starting forest configuration is random,
 with 0.75 chance of a tree and 0.15 of an empty space.
 
