@@ -61,8 +61,8 @@ The starting position of the helicopter is 7,7, just in the middle.
 The starting forest configuration is random,
 with 0.75 chance of a tree and 0.15 of an empty space.
 
-The cell numeration starts from the left and upper corner. So the cell[0][0]
-is at most left and upper postion and the cell[15][15] is at most right and down postion.
+The cell numeration starts from the left and upper corner. So the cell at 0,0
+is at the most left and upper postion and the cell at 15,15 is at most right and down postion.
 
 ## Running
 Start by importing the package and initializing the environment
