@@ -73,10 +73,10 @@ class Helicopter(forest_fire.ForestFire):
             reward = self.calculate_reward()
             return (obs, reward, termination, {'hits': self.hits})
         if self.defrost == 0:
-            self.new_pos(action)
-            self.hits += self.extinguish_fire()
             # Run fire simulation
             self.update()
+            self.new_pos(action)
+            self.hits += self.extinguish_fire()
             self.defrost = self.freeze
             obs = (self.grid, np.array([self.pos_row, self.pos_col]))
             reward = self.calculate_reward()
