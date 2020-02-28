@@ -48,11 +48,11 @@ The reward scheme is -1 per burning tree at each time.
 The task is continuing.
 
 The representation of the lattice is
-a numpy character matrix.
+a numpy matrix.
 
-* '|' represents a tree
-* '.' represents empty
-* '*' represents fire
+* 3 represents a tree
+* 1 represents empty
+* 7 represents fire
 
 The observation returned by the the step method is a tuple of two elements,
 the first is the lattice and the second element is the postion of the helicopter in a [row, col] format.
@@ -83,21 +83,17 @@ env = gym.make('ForestFire-v0')
 
 # First observation
 observation = env.reset()
-
-# Initial lattice
 env.render()
 
 total_reward = 0
-for i in range(8 * 20 + 1):
+for i in range(env.freeze * 100):
   print('.', end='')
-  action = np.random.choice(np.arange(1,10))
+  action = np.random.choice(list(env.actions_set))
   observation, reward, done, info = env.step(action)
   total_reward += reward
-  if i%8 == 0:
-      print('\n#### Iteration {} ####'.format(i))
-      env.render()
-env.close()
+  env.render()
 
+print('\nTotal Reward: {}'.format(total_reward))
 print('\nTotal Reward: {}'.format(total_reward))
 ```
 ## Images
