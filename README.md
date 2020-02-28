@@ -94,7 +94,6 @@ for i in range(env.freeze * 100):
   env.render()
 
 print('\nTotal Reward: {}'.format(total_reward))
-print('\nTotal Reward: {}'.format(total_reward))
 ```
 ## Images
 Some camptures of env.render()
