@@ -7,3 +7,5 @@ Created on Mon Jan 27 16:32:34 2020
 """
 
 from gym_forest_fire.envs.forest_fire_env import ForestFireEnv
+import helicopter
+import forest_fire
