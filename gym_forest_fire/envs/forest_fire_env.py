@@ -18,5 +18,5 @@ import gym
 from gym import error, spaces, utils
 from gym.utils import seeding
 
-class ForestFireEnv(helicopter.Helicopter, gym.Env):
+class ForestFireEnv(helicopter.EnvForestFire, gym.Env):
     metadata = {'render.modes': ['human']}
