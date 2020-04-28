@@ -50,9 +50,9 @@ The task is continuing.
 The representation of the lattice is
 a numpy matrix.
 
-* 3 represents a tree
-* 1 represents empty
-* 7 represents fire
+* 0.3 represents a tree
+* 0.1 represents empty
+* 0.7 represents fire
 
 The observation returned by the the step method is a tuple of two elements,
 the first is the lattice and the second element is the postion of the helicopter in a [row, col] format.
@@ -88,7 +88,7 @@ env.render()
 total_reward = 0
 for i in range(env.freeze * 100):
   print('.', end='')
-  action = np.random.choice(list(env.actions_set))
+  action = np.random.choice(list(env.movement_actions))
   observation, reward, done, info = env.step(action)
   total_reward += reward
   env.render()
