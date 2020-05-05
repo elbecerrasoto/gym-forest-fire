@@ -18,5 +18,22 @@ import gym
 from gym import error, spaces, utils
 from gym.utils import seeding
 
-class ForestFireEnv(helicopter.EnvForestFire, gym.Env):
+class ForestFireEnv0(gym.Env):
     metadata = {'render.modes': ['human']}
+    maker_params = {'env_mode': 'stochastic',
+                 'n_row': 16, 'n_col': 16, 'p_tree': 0.100, 'p_fire': 0.005, 'custom_grid': None,
+                 'pos_row': 8, 'pos_col': 8, 'effect': 'extinguish', 'freeze': 8,                 
+                 'termination_type': 'continuing', 'steps_to_termination': None, 'fire_threshold': None,
+                 'reward_type': 'cells',
+                 'reward_tree': 0.0, 'reward_fire': -1.0, 'reward_empty': 0.0, 'reward_hit': None,
+                 'tree': 0.77, 'empty': 0.66, 'fire': -1.0, 'rock': 0.88, 'lake': 0.99,
+                 'ip_tree': 0.75, 'ip_empty': 0.25, 'ip_fire': None, 'ip_rock': 0.00, 'ip_lake': None}
+    env = helicopter.EnvMakerForestFire(**maker_params)
+    def reset(self):
+    	return self.env.reset()
+    def step(self, action):
+    	return self.env.step(action)
+    def render(self):
+        return self.env.render()
+    def close(self):
+        return self.env.close()

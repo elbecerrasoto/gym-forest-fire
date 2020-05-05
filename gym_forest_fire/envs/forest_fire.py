@@ -164,7 +164,6 @@ class ForestFire():
                  forest_mode = 'stochastic', force_fire = True, boundary='invariant',
                  tree = '|', empty = '.', fire = '*', rock = '#', lake = 'O',
                  ip_tree = None, ip_empty = None, ip_fire = None, ip_rock = None, ip_lake = None): 
-
         self.n_row = n_row
         self.n_col = n_col
         self.p_tree = p_tree
@@ -365,7 +364,7 @@ class ForestFire():
             raise ValueError('Unrecognized Cell')
         self.n_row = grid.shape[0]
         self.n_col = grid.shape[1]
-        self.grid = grid 
+        self.grid = grid
     def grid_to_rgba(self):
         rgba_mat = self.grid.tolist()
         for row in range(self.n_row):

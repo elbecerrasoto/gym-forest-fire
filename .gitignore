@@ -1,3 +1,6 @@
+# Custom ignores
+gym_forest_fire/envs/test_helicopter_forest_fire.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
