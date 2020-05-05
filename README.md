@@ -3,7 +3,6 @@ Forest Fire Environment Maker for OpenAI Gym. <br>
 *gym_forest_fire* <br>
 *version 2.1*
 
-![A](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/fig_1.svg)
 ## Installation
 1. Install [OpenAi Gym](https://github.com/openai/gym)
 ```bash
@@ -61,7 +60,7 @@ At each time step and for each cell apply the following rules
     FIRE turns into EMPTY
 *With probability p:
     EMPTY turns into TREE                    Growth Rule
-        
+
 Also two more cells were added.
 ROCK, does not interacts with anything
     Used as a true death cell
@@ -194,5 +193,3 @@ env = helicopter.EnvMakerForestFire(pos_row=r_mid, pos_col=c_mid, custom_grid=gr
 env.reset()
 env.render()
 ```
-
-![B](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq1.svg)
