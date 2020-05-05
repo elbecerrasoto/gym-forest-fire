@@ -1,7 +1,9 @@
 # Gym Forest Fire
-Forest Fire Environment Maker for OpenAI Gym. <br>
-*gym_forest_fire* <br>
+Forest Fire Environment Maker for OpenAI Gym.<br>
+*gym_forest_fire*<br>
 *version 2.1*
+
+![All Cells](https://drive.google.com/uc?export=download&id=1DqXxiko8otQlsz5v4zfcjkD77Gaht6gB)
 
 ## Installation
 1. Install [OpenAi Gym](https://github.com/openai/gym)
@@ -22,7 +24,7 @@ The package implements a maker of environments,
 for Reinforcement Learning tasks.
 
 The created environments follow the guidlines of the Open AI gym API,
-abd would contain the following methods:
+and would contain the following methods:
 
 ``` python
 from gym_forest_fire import EnvMakerForestFire
@@ -37,39 +39,43 @@ env.close()
 
 The created environment simulates a helicopter trying to extinguish a forest fire.
 
-The forest is simulated using a Forest Fire Automaton [Drossel and Schwabl (1992)] and <br>
+The forest is simulated using a Forest Fire Automaton [Drossel and Schwabl (1992)] and<br>
 the helicopter as a position on top of the lattice and some effect over the cells.
 
-At each time step the Agent has to make a decision to where in the neighborhood to move the helicopter, <br>
-then the helicopter moves and has some influence over the destination cell, <br>
-the effect is simply changing it to another cell type, usually from 'fire' to 'empty' <br>
-and the reward is some function of the current state of the system, <br>
+At each time step the Agent has to make a decision to where in the neighborhood to move the helicopter,<br>
+then the helicopter moves and has some influence over the destination cell,<br>
+the effect is simply changing it to another cell type, usually from 'fire' to 'empty'<br>
+and the reward is some function of the current state of the system,<br>
 usually just counting cells types, multiplying for some weights (positive for trees and negative for fires) and adding up.
 
 ### Cellular Automaton Rules
 **Forest Fire Automaton Drossel and Schwabl (1992)**
 
-Three type of cells: TREE, EMPTY and FIRE
+Three type of cells: TREE, EMPTY and FIRE.<br>
 At each time step and for each cell apply the following rules
 (order does not matter).
-*With probability f:                       Lighting Rule
-    TREE turns into Fire
-*If at least one neighbor is FIRE:         Propagation Rule
-    TREE turns into Fire
-*Unconditional:                            Burning Rule
-    FIRE turns into EMPTY
-*With probability p:
-    EMPTY turns into TREE                    Growth Rule
+1. **Lighting Rule**<br>
+With probability f:<br>
+TREE turns into Fire
+2. **Propagation Rule**<br>
+If at least one neighbor is FIRE:<br>
+TREE turns into Fire
+3. **Burning Rule**<br>
+Unconditional:<br>
+FIRE turns into EMPTY
+4. **Growth Rule**<br>
+With probability p:<br>EMPTY turns into TREE                    
 
 Also two more cells were added.
-ROCK, does not interacts with anything
+* ROCK, does not interacts with anything
     Used as a true death cell
     Used on the Deterministic mode
     Used on the invariant boundary conditions
-LAKE, does not interacts with anything
+* LAKE, does not interacts with anything
     Used on other classes that inherit from ForestFire
 
-Deterministic mode: The automaton does not computes
+**Deterministic mode:**
+The automaton does not computes
 the Lighting and Growth rules, stops when there are
 no more FIRE cells.
 
@@ -193,3 +199,4 @@ env = helicopter.EnvMakerForestFire(pos_row=r_mid, pos_col=c_mid, custom_grid=gr
 env.reset()
 env.render()
 ```
+![Custom Grid](https://drive.google.com/uc?export=download&id=1BsDZFoJQNvl-X-liVw1arnF8jPjgbHg5)
