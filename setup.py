@@ -9,7 +9,7 @@ Created on Mon Jan 27 16:11:18 2020
 from setuptools import setup
 
 setup(name='gym_forest_fire',
-      version='2.0.1',
+      version='2.1',
       install_requires=['gym',
                         'numpy',
                         'matplotlib',
