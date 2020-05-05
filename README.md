@@ -3,7 +3,7 @@ Forest Fire Environment Maker for OpenAI Gym.<br>
 *gym_forest_fire*<br>
 *version 2.1*
 
-![All Cells](https://drive.google.com/uc?export=download&id=1DqXxiko8otQlsz5v4zfcjkD77Gaht6gB)
+![All Cells](https://drive.google.com/uc?export=view&id=1DqXxiko8otQlsz5v4zfcjkD77Gaht6gB)
 
 ## Installation
 1. Install [OpenAi Gym](https://github.com/openai/gym)
@@ -20,7 +20,7 @@ pip install -e .
 
 ## Basic Info
 
-The package implements a maker of environments,
+The package implements a tool for making environments<br>
 for Reinforcement Learning tasks.
 
 The created environments follow the guidlines of the Open AI gym API,
@@ -85,8 +85,7 @@ check the documentation.
 help(EnvMakerForestFire)
 ```
 
-The package also contains and already instantiated example of an environment,
-described below.
+The package also contains an already instantiated example of an environment, described below.
 
 ## Preloaded Implementation
 The _ForestFire-v0_ environment implements a
@@ -199,4 +198,4 @@ env = helicopter.EnvMakerForestFire(pos_row=r_mid, pos_col=c_mid, custom_grid=gr
 env.reset()
 env.render()
 ```
-![Custom Grid](https://drive.google.com/uc?export=download&id=1BsDZFoJQNvl-X-liVw1arnF8jPjgbHg5)
+![Custom Grid](https://drive.google.com/uc?export=view&id=1BsDZFoJQNvl-X-liVw1arnF8jPjgbHg5)
