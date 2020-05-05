@@ -1,7 +1,9 @@
 # Gym Forest Fire
-Forest Fire Environment for OpenAI Gym.
-gym_forest_fire version 2.1
+Forest Fire Environment Maker for OpenAI Gym. <br>
+*gym_forest_fire* <br>
+*version 2.1*
 
+![A](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/fig_1.svg)
 ## Installation
 1. Install [OpenAi Gym](https://github.com/openai/gym)
 ```bash
@@ -35,27 +37,30 @@ env.close()
 ```
 
 The created environment simulates a helicopter trying to extinguish a forest fire.
-The forest is simulated using a Forest Fire Automaton [Drossel and Schwabl (1992)] and
+
+The forest is simulated using a Forest Fire Automaton [Drossel and Schwabl (1992)] and <br>
 the helicopter as a position on top of the lattice and some effect over the cells.
-At each time step the Agent has to make a decision to where in the neighborhood to move the helicopter,
-then the helicopter moves and has some influence over the destination cell,
-the effect is simply changing it to another cell type, usually from 'fire' to 'empty'
-and the reward is some function of the current state of the system,
+
+At each time step the Agent has to make a decision to where in the neighborhood to move the helicopter, <br>
+then the helicopter moves and has some influence over the destination cell, <br>
+the effect is simply changing it to another cell type, usually from 'fire' to 'empty' <br>
+and the reward is some function of the current state of the system, <br>
 usually just counting cells types, multiplying for some weights (positive for trees and negative for fires) and adding up.
 
-Forest Fire Automaton Drossel and Schwabl (1992)
+### Cellular Automaton Rules
+**Forest Fire Automaton Drossel and Schwabl (1992)**
 
 Three type of cells: TREE, EMPTY and FIRE
 At each time step and for each cell apply the following rules
 (order does not matter).
-    * With probability f:                       Lighting Rule
-        TREE turns into Fire
-    * If at least one neighbor is FIRE:         Propagation Rule
-        TREE turns into Fire
-    * Unconditional:                            Burning Rule
-        FIRE turns into EMPTY
-    * With probability p:
-        EMPTY turns into TREE                    Growth Rule
+*With probability f:                       Lighting Rule
+    TREE turns into Fire
+*If at least one neighbor is FIRE:         Propagation Rule
+    TREE turns into Fire
+*Unconditional:                            Burning Rule
+    FIRE turns into EMPTY
+*With probability p:
+    EMPTY turns into TREE                    Growth Rule
         
 Also two more cells were added.
 ROCK, does not interacts with anything
@@ -190,19 +195,4 @@ env.reset()
 env.render()
 ```
 
-
-## Images
-Some camptures of env.render()
-The red cross marks the position of the helicopter.
-
-![A](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq0.svg)
-**The forest at some time _t+0_**
-
 ![B](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq1.svg)
-**The forest at some time _t+8_**
-
-![C](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq2.svg)
-**The forest at some time _t+16_**
-
-![D](https://github.com/elbecerrasoto/gym-forest-fire/blob/master/pics/seq3.svg)
-**The forest at some time _t+24_**
