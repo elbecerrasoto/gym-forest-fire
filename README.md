@@ -3,7 +3,7 @@ Forest Fire Environment Maker for OpenAI Gym.<br>
 *gym_forest_fire*<br>
 *version 2.1*
 
-![All Cells](https://drive.google.com/uc?export=view&id=1DqXxiko8otQlsz5v4zfcjkD77Gaht6gB)
+![All Cells](pics/all_cells.svg)
 
 ## Installation
 1. Install [OpenAi Gym](https://github.com/openai/gym)
@@ -198,4 +198,4 @@ env = helicopter.EnvMakerForestFire(pos_row=r_mid, pos_col=c_mid, custom_grid=gr
 env.reset()
 env.render()
 ```
-![Custom Grid](https://drive.google.com/uc?export=view&id=1BsDZFoJQNvl-X-liVw1arnF8jPjgbHg5)
+![Custom Grid](pics/custom_grid.svg)
