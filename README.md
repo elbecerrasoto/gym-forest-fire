@@ -1,6 +1,7 @@
 # Gym Forest Fire
-Forest Fire Environment for OpenAI Gym.
-gym_forest_fire version 2.1
+Forest Fire Environment for OpenAI Gym. <br>
+gym_forest_fire <br>
+version 2.1
 
 ## Installation
 1. Install [OpenAi Gym](https://github.com/openai/gym)
