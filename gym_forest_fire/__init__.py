@@ -7,6 +7,8 @@ Created on Mon Jan 27 16:11:20 2020
 """
 
 from gym_forest_fire.envs.helicopter import EnvMakerForestFire
+from gym_forest_fire.envs.forest_fire import ForestFire
+
 
 from gym.envs.registration import register
 

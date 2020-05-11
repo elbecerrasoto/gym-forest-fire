@@ -31,26 +31,31 @@ class Helicopter(ForestFire):
     >>> helicopter.render()
     """
     movement_actions = {1, 2, 3, 4, 5, 6, 7, 8, 9}
-    def __init__(self, pos_row = None, pos_col = None,
+    def __init__(self, init_pos_row = None, init_pos_col = None,
                  n_row = 16, n_col = 16, p_tree=0.100, p_fire=0.001,
-                 forest_mode = 'stochastic', force_fire = True, boundary='invariant',
+                 forest_mode = 'stochastic', custom_grid = None,
+                 force_fire = True, boundary='invariant',
                  tree = '|', empty = '.', fire = '*', rock = '#', lake = 'O',
                  ip_tree = None, ip_empty = None, ip_fire = None, ip_rock = None, ip_lake = None):
         # Forest Fire Parameters
-        ForestFire.__init__(self,n_row,n_col,p_tree,p_fire,forest_mode,
-                            force_fire,boundary,tree,empty,fire,rock,lake,
-                            ip_tree,ip_empty,ip_fire,ip_rock,ip_lake)
+        kw_params={'n_row':n_row, 'n_col':n_col, 'p_tree':p_tree, 'p_fire':p_fire, 'forest_mode':forest_mode,
+                 'custom_grid':custom_grid, 'force_fire':force_fire, 'boundary':boundary,
+                 'tree':tree, 'empty':empty, 'fire':fire, 'rock':rock, 'lake':lake,
+                 'ip_tree':ip_tree, 'ip_empty':ip_empty, 'ip_fire':ip_fire, 'ip_rock':ip_rock, 'ip_lake':ip_lake}      
+        ForestFire.__init__(self,**kw_params)
+        self.init_pos_row = init_pos_row
+        self.init_pos_col = init_pos_col
         # Helicopter attributes
-        if pos_row is None:
+        if init_pos_row is None:
             # Start aprox in the middle
-            self.pos_row = math.ceil(self.n_row/2)
+            self.pos_row = self.n_row//2
         else:
-            self.pos_row = pos_row
-        if pos_col is None:
+            self.pos_row = init_pos_row
+        if init_pos_col is None:
             # Start aprox in the middle
-            self.pos_col = math.ceil(self.n_col/2)
+            self.pos_col = self.n_col//2
         else:
-            self.pos_col = pos_col      
+            self.pos_col = init_pos_col      
     def new_pos(self, movement):
         self.pos_row = self.pos_row if movement == 5\
             else self.pos_row if self.is_out_borders(movement, pos='row')\
@@ -87,10 +92,11 @@ class Helicopter(ForestFire):
         return out_of_border
     def render(self, title='Forest Fire Automaton'):
         """Automaton visualization"""
+        grid = self.grid_to_rgba()
         # Plot style
         sns.set_style('whitegrid')
         # Main Plot
-        plt.imshow(self.grid_to_rgba(), aspect='equal')
+        plt.imshow(grid, aspect='equal')
         # Title showing Reward
         plt.title(title, **self.title_font)
         # Modify Axes
@@ -110,7 +116,7 @@ class Helicopter(ForestFire):
         ax.tick_params(axis=u'both', which=u'both',length=0)
         # Add Helicopter Cross
         marker_style = dict(color='0.7', marker='P',
-                    markersize=10, markerfacecolor='0.2')
+                    markersize=12, markerfacecolor='0.2')
         ax.plot(self.pos_col, self.pos_row, **marker_style)
         fig = plt.gcf()
         plt.show()
@@ -185,12 +191,12 @@ class EnvMakerForestFire(Helicopter):
         Main mode of the agent.
         - 'stochastic'
         Applies all the rules of the Forest Fire Automaton and sets the optional parameters (except if manually changed):
-        pos_row = ceil(n_row), pos_col = ceil(n_pos), effect = 'extinguish', freeze = ceil((n_row + n_col) / 4)                 
+        pos_row = ceil(n_row), pos_col = ceil(n_pos), effect = 'extinguish', moves_before_updating = ceil((n_row + n_col) / 4)                 
                  termination_type = 'continuing', ip_tree = 0.75, ip_empty = 0.25, ip_fire = 0.0, ip_rock = 0.0, ip_lake = 0.0
         - 'deterministic'
         Does not apply the stochastic rules of the Fire Forest Automaton, those are the Lighting and Growth rules.
         Also sets the following parameters:
-        pos_row = ceil(n_row), pos_col = ceil(n_pos), effect = 'clearing', freeze = 0                 
+        pos_row = ceil(n_row), pos_col = ceil(n_pos), effect = 'clearing', moves_before_updating = 0                 
         termination_type = 'no_fire', ip_tree = 0.59, ip_empty = 0.0, ip_fire = 0.01, ip_rock = 0.40, ip_lake = 0.0
     n_row : int, default=16 
         Rows of the grid.
@@ -213,9 +219,18 @@ class EnvMakerForestFire(Helicopter):
         Whenever on top: transforms fire cell to empty.
         - 'clearing'
         Whenever on top: transforms tree cell to empty.
+        - 'building'
+        Whenever on top: transforms tree or empty cell to rock.     
+        - 'design'
+        Whenever on top: transforms tree or empty cell to rock.
+        Whenever on top: transforms rock to empty.
         - 'multi'
-        Combines the two previous effects.
-    freeze : int, optional
+        Combines 'extinguish' and 'clearing' effects.
+        elif self.effect == 'building':
+            if current_cell == self.tree:
+                self.grid[row][col] = self.rock
+        elif self.effect == 'design':
+    moves_before_updating : int, optional
         Steps the Agent can make before an Automaton actuliazation.
     termination_type : {'continuing', 'no_fire', 'steps', 'threshold'}, optional
         Termination conditions for the task.
@@ -333,109 +348,190 @@ class EnvMakerForestFire(Helicopter):
     Closes the environment
     >>> env.close 
 """
-    version = 'v2.1'
+    # Metadata
+    version = 'v2.4'
+    # Global Info
+    terminated = False
+    first_termination = True
     total_hits = 0
     total_burned = 0
     total_reward = 0.0
     steps = 0
+    # Defaults
     def_steps_to_termination = 128
     def_fire_threshold = 1024
+    
     def __init__(self, env_mode = 'stochastic',
-                 n_row = 16, n_col = 16, p_tree = 0.300, p_fire = 0.006, custom_grid = None,
-                 pos_row = None, pos_col = None, effect = None, freeze = None,                 
+                 n_row = 16, n_col = 16, p_tree = 0.100, p_fire = 0.001, custom_grid = None,
+                 init_pos_row = None, init_pos_col = None, moves_before_updating = None,                 
                  termination_type = None, steps_to_termination = None, fire_threshold = None,
-                 reward_type = 'cells',
-                 reward_tree = 1.0, reward_fire = -8.0, reward_empty = 0.0, reward_hit = 10.0,
+                 reward_type = 'cells', reward_tree = 1.0, reward_fire = -8.0, reward_empty = 0.0, reward_hit = 10.0,
                  tree = 0.77, empty = 0.66, fire = -1.0, rock = 0.88, lake = 0.99,
+                 sub_tree = None, sub_empty = None, sub_fire = None, sub_rock = None, sub_lake = None,
                  ip_tree = None, ip_empty = None, ip_fire = None, ip_rock = None, ip_lake = None):
+        
+        kw_params = {
+            'init_pos_row': init_pos_row, 'init_pos_col': init_pos_col,
+            'n_row': n_row, 'n_col': n_col, 'p_tree': p_tree, 'p_fire': p_fire,
+            'forest_mode': env_mode, 'custom_grid': custom_grid,
+            'tree': tree, 'empty': empty, 'fire': fire, 'rock': rock, 'lake': lake,
+            'ip_tree': ip_tree, 'ip_empty': ip_empty, 'ip_fire': ip_fire, 'ip_rock': ip_rock, 'ip_lake': ip_lake
+            }
+
+        # Helicopter Initialization
+        Helicopter.__init__(self, **kw_params)
+        
         self.env_mode = env_mode
-        self.custom_grid = custom_grid
-        Helicopter.__init__(self,pos_row = pos_row, pos_col = pos_col,
-                            n_row = n_row, n_col = n_col, p_tree = p_tree,
-                            p_fire = p_fire, forest_mode = self.env_mode,
-                            tree = tree, empty = empty, fire = fire, rock = rock, lake = lake,
-                            ip_tree = ip_tree, ip_empty = ip_empty, ip_fire = ip_fire, ip_rock = ip_rock, ip_lake = ip_lake)
-        self.init_env_mode(effect, freeze, termination_type)
-        self.defrost = self.freeze
+        
+        # Effect over cells, substitution rules
+        self.sub_tree, self.sub_empty, self.sub_fire, self.sub_rock, self.sub_lake = sub_tree, sub_empty, sub_fire, sub_rock, sub_lake
+        
+        # Automatic initialization according to env_mode. It sets: moves_before_updating, termination_type and default substitutions
+        self.init_env_mode(moves_before_updating, termination_type)
+        
+        # Initialization of the cell substitution rules dictionary, for the effects of the helicopter
+        self.init_effects_dict()
+        
+        # Counter for updating the grid
+        self.remaining_moves = self.moves_before_updating
+        
+        # Termination type specific params
         self.steps_to_termination = steps_to_termination
         self.fire_threshold = fire_threshold
+        
+        # Reward params
         self.reward_type = reward_type
         self.reward_tree = reward_tree
         self.reward_fire = reward_fire
         self.reward_empty = reward_empty
         self.reward_hit = reward_hit
-        self.terminated = self.is_task_terminated()
-    def init_env_mode(self, effect, freeze, termination_type):
+
+    def init_env_mode(self, moves_before_updating, termination_type):        
         if self.env_mode == 'stochastic':
-            self.effect = 'extinguish' if effect is None else effect
-            self.freeze = math.ceil((self.n_row + self.n_col) / 4) if freeze is None else freeze
+            speed = math.ceil((self.n_row + self.n_col) / 4)
+            self.sub_fire = 'empty' if self.sub_fire is None else self.sub_fire
+            self.moves_before_updating = speed if moves_before_updating is None else moves_before_updating
             self.termination_type = 'continuing' if termination_type is None else termination_type
+            
         elif self.env_mode == 'deterministic':
-            self.effect = 'clearing' if effect is None else effect
-            self.freeze = 0 if freeze is None else freeze
+            self.sub_tree = 'empty' if self.sub_fire is None else self.sub_fire
+            self.moves_before_updating = 0 if moves_before_updating is None else moves_before_updating
             self.termination_type = 'no_fire' if termination_type is None else termination_type
         else:
             raise ValueError('Unrecognized Environment Mode')
-    def reset(self):
-        init_attributes = ('env_mode','n_row','n_col','pos_row','pos_col','custom_grid',
-                 'p_tree','p_fire','effect','freeze','termination_type',
-                 'steps_to_termination','fire_threshold','reward_type',
-                 'reward_tree','reward_fire','reward_empty','reward_hit',
-                 'tree','empty','fire','rock','lake','ip_tree','ip_empty',
-                 'ip_fire','ip_rock','ip_lake')       
-        init_values = (self.env_mode,self.n_row,self.n_col,self.pos_row,self.pos_col, self.custom_grid,
-                 self.p_tree,self.p_fire,self.effect,self.freeze,self.termination_type,
-                 self.steps_to_termination,self.fire_threshold,self.reward_type,
-                 self.reward_tree,self.reward_fire,self.reward_empty,self.reward_hit,
-                 self.tree,self.empty,self.fire,self.rock,self.lake,self.ip_tree,self.ip_empty,
-                 self.ip_fire,self.ip_rock,self.ip_lake)
-        self.init_kwargs = dict(zip(init_attributes, init_values))
-        self.__init__(**self.init_kwargs)
-        if self.custom_grid is not None: self.grid_init_manually(self.custom_grid)
+            
+    def init_effects_dict(self):        
+        effect_translation={
+            'tree': self.tree,
+            'empty': self.empty,
+            'fire': self.fire,
+            'rock': self.rock,
+            'lake': self.lake}
+        effect_over_tree = effect_translation['tree'] if self.sub_tree is None else effect_translation[self.sub_tree]
+        effect_over_empty = effect_translation['empty'] if self.sub_empty is None else effect_translation[self.sub_empty]
+        effect_over_fire = effect_translation['fire'] if self.sub_fire is None else effect_translation[self.sub_fire]
+        effect_over_rock = effect_translation['rock'] if self.sub_rock is None else effect_translation[self.sub_rock]
+        effect_over_lake = effect_translation['lake'] if self.sub_lake is None else effect_translation[self.sub_lake]        
+        self.effects_dict={
+            self.tree: effect_over_tree,
+            self.empty: effect_over_empty,
+            self.fire: effect_over_fire,
+            self.rock: effect_over_rock,
+            self.lake: effect_over_lake
+            }
+
+    def init_global_info(self):
+        self.terminated = False
         self.total_hits = 0
         self.total_burned = 0
         self.total_reward = 0.0
         self.steps = 0
-        self.obs = (self.grid, np.array([self.pos_row, self.pos_col]))
+        try:
+            delattr(self, 'reward')
+        except AttributeError:
+            pass
+        
+    def reset(self):
+        self.init_kw_params = {
+            'env_mode': self.env_mode,
+            'n_row': self.n_row, 'n_col': self.n_col, 'p_tree': self.p_tree, 'p_fire': self.p_fire, 'custom_grid': self.custom_grid,
+            'init_pos_row': self.init_pos_row, 'init_pos_col': self.init_pos_col, 'moves_before_updating': self.moves_before_updating,                 
+            'termination_type': self.termination_type, 'steps_to_termination': self.steps_to_termination, 'fire_threshold': self.fire_threshold,
+            'reward_type': self.reward_type, 'reward_tree': self.reward_tree, 'reward_fire': self.reward_fire, 'reward_empty': self.reward_empty, 'reward_hit': self.reward_hit,
+            'tree': self.tree, 'empty': self.empty, 'fire': self.fire, 'rock': self.rock, 'lake': self.lake,
+            'sub_tree': self.sub_tree, 'sub_empty': self.sub_empty, 'sub_fire': self.sub_fire, 'sub_rock': self.sub_rock, 'sub_lake': self.sub_lake,
+            'ip_tree': self.ip_tree, 'ip_empty': self.ip_empty, 'ip_fire': self.ip_fire, 'ip_rock': self.ip_rock, 'ip_lake': self.ip_lake
+            }
+
+        # Rerun object method init
+        self.__init__(**self.init_kw_params)
+        # Restart global vars
+        self.init_global_info()
+        # Return observations, gym API
+        self.obs = (self.grid, np.array([self.pos_row, self.pos_col]), np.array(self.remaining_moves))
         return self.obs
-    first_time_termination = True
+    
     def step(self, action):
         """Must return tuple with
         numpy array, int reward, bool termination, dict info
         """
         self.steps += 1
-        self.terminated = self.is_task_terminated()
+        
         if not self.terminated:
-            if self.defrost == 0:
+            # Is it time to update forest?
+            if self.remaining_moves == 0:
                 # Run fire simulation
                 self.update()
-                self.defrost = self.freeze
+                # Restart the counter
+                self.remaining_moves = self.moves_before_updating
             else:
-                self.defrost -= 1
+                self.remaining_moves -= 1
+                
+            # Move the helicopter    
             self.new_pos(action)
-            self.effect_over_cells()
+            # Register if it has moved towards fire 
+            current_cell = self.grid[self.pos_row][self.pos_col]
+            self.hit = True if current_cell == self.fire else False
             self.total_hits += self.hit
+            # Apply the powers of the helicopter over the grid (cell substitution)
+            self.effect_over_cells()
+            # Calculate reward only in 'stochastic' mode 
             self.reward = self.calculate_reward() if self.env_mode == 'stochastic' else 0.0
+
         else:
-            if self.env_mode == 'deterministic' and self.first_time_termination:
+            # Calculate reward if the episode has just ended, 0.0 otherwise
+            if self.first_termination:
                 self.reward = self.calculate_reward()
+                self.first_termination = False
             else:
+                # Convert from episodic to continuing task by always returning 0.0 reward if the episode is over
                 self.reward = 0.0
-            self.first_time_termination = False
+
+        # Check for stopping condition
+        self.terminated = self.is_task_terminated()
+        
+        # Update some global info
         self.total_reward += self.reward
-        self.obs = (self.grid, np.array([self.pos_row, self.pos_col]))
         self.total_burned += self.count_cells()[self.fire]
+        
+        # Observations for gym API
+        self.obs = (self.grid, np.array([self.pos_row, self.pos_col]), np.array(self.remaining_moves))
+        # Info for gym API
         info = {'steps': self.steps, 'total_reward': self.total_reward,
                 'total_hits': self.total_hits, 'total_burned': self.total_burned}
+        # Gym API
         return (self.obs, self.reward, self.terminated, info)
+    
     def render(self):
         try:
-            return Helicopter.render(self, title=f'Mode: {self.env_mode.title()}\nReward: {self.reward}')
+            return Helicopter.render(self, title=f'Moves: {self.remaining_moves}\nReward: {self.reward}')
         except AttributeError:
             return Helicopter.render(self, title=f'Fores Fire Environment\nMode: {self.env_mode.title()}')
+        
     def close(self):
         print('Gracefully Exiting, come back soon')
         return True
+    
     def is_task_terminated(self):
         if self.termination_type == 'continuing':
             terminated = False
@@ -451,25 +547,17 @@ class EnvMakerForestFire(Helicopter):
         else:
             raise ValueError('Unrecognized termination parameter')
         return terminated
+    
     def effect_over_cells(self):
-        self.hit = False
         row = self.pos_row
         col = self.pos_col
         current_cell = self.grid[row][col]
-        if current_cell == self.fire: self.hit = True 
-        if self.effect == 'extinguish':
-            if current_cell == self.fire:
-                self.grid[row][col] = self.empty
-        elif self.effect == 'clearing':
-            if current_cell == self.tree:
-                self.grid[row][col] = self.empty
-        elif self.effect == 'multi':
-            if current_cell == self.fire:
-                self.grid[row][col] = self.empty
-            elif current_cell == self.tree:
-                self.grid[row][col] = self.empty
-        else:
-            raise ValueError('Unrecognized effect over cells')
+        # Make the substituion of current cell, following effects_dict
+        for symbol in self.effects_dict:
+            if symbol == current_cell:
+                self.grid[row][col] = self.effects_dict[symbol]
+                break
+            
     def calculate_reward(self):          
         reward = 0.0
         self.count_cells()
@@ -489,8 +577,14 @@ class EnvMakerForestFire(Helicopter):
         else:
             raise ValueError('Unrecognized reward type')
         return reward
+    
     def count_cells(self):
         cell_types, counts = np.unique(self.grid, return_counts=True)
         cell_counts = defaultdict(int, zip(cell_types, counts))
         self.cell_counts = cell_counts
         return cell_counts
+    
+    def random_policy(self):
+        actions = list(self.movement_actions)
+        action = np.random.choice(actions)
+        return action

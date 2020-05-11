@@ -20,15 +20,21 @@ from gym.utils import seeding
 
 class ForestFireEnv0(gym.Env):
     metadata = {'render.modes': ['human']}
+    # Parameters
     maker_params = {'env_mode': 'stochastic',
-                 'n_row': 16, 'n_col': 16, 'p_tree': 0.100, 'p_fire': 0.005, 'custom_grid': None,
-                 'pos_row': 8, 'pos_col': 8, 'effect': 'extinguish', 'freeze': 8,                 
-                 'termination_type': 'continuing', 'steps_to_termination': None, 'fire_threshold': None,
-                 'reward_type': 'cells',
-                 'reward_tree': 0.0, 'reward_fire': -1.0, 'reward_empty': 0.0, 'reward_hit': None,
-                 'tree': 0.77, 'empty': 0.66, 'fire': -1.0, 'rock': 0.88, 'lake': 0.99,
-                 'ip_tree': 0.75, 'ip_empty': 0.25, 'ip_fire': None, 'ip_rock': 0.00, 'ip_lake': None}
-    env = helicopter.EnvMakerForestFire(**maker_params)
+                 'n_row': 16, 'n_col': 16, 'p_tree': 0.100, 'p_fire': 0.005,
+                 'init_pos_row': 8, 'init_pos_col': 8,
+                 'termination_type': 'continuing', 'reward_type': 'cells' }
+    cell_symbols = {'tree': 0.77, 'empty': 0.66, 'fire': -1.0, 'rock': 0.88, 'lake': 0.99}
+    substitution_effects = {'sub_tree': None, 'sub_empty': None, 'sub_fire': 'empty', 'sub_rock': None, 'sub_lake': None}
+    reward_values = {'reward_tree': 0.0, 'reward_fire': -1.0, 'reward_empty': 0.0, 'reward_hit': None,}
+    init_cell_probs = {'ip_tree': 0.75, 'ip_empty': 0.25, 'ip_fire': None, 'ip_rock': 0.00, 'ip_lake': None}
+    # Instantiated Environment
+    env = helicopter.EnvMakerForestFire(**maker_params,
+                                        **cell_symbols,
+                                        **substitution_effects,
+                                        **reward_values,
+                                        **init_cell_probs)
     def reset(self):
     	return self.env.reset()
     def step(self, action):

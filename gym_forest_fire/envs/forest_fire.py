@@ -61,6 +61,9 @@ class ForestFire():
         The boundaries are a copy of the adjecent cells.
         - 'toroidal' 
         The boundaries are linked to the other end of the lattice.
+    custom_grid : numpy like matrix, defult=None
+        If matrix provided, it would be used as the starting lattice for the automaton
+        instead of the randomly generated one. Must use the same symbols for the cells.
     tree : Representation of the TREE cell, default='|'
     empty : Representation of the EMPTY cell, default='.'
     fire : Representation of the FIRE cell, default='*'
@@ -144,7 +147,7 @@ class ForestFire():
     Change the grid for a predifined one and run it again
     
     >>> forest_custom = [['|','#','O','*'],['.','#', '#', '|'],['|', '|','O','|']]
-    >>> amazonia.grid_init_manually(np.array(forest_custom))
+    >>> amazonia = forest_fire.ForestFire(custom_grid = forest_custom)    
     >>> forest.simulate(20)
     
     """
@@ -160,8 +163,8 @@ class ForestFire():
     # Grid Defualt Initialization Probabilities
     def_init_stoch = {'ip_tree':0.75, 'ip_empty':0.25, 'ip_fire':0.0, 'ip_rock':0.0, 'ip_lake':0.0}
     def_init_determ = {'ip_tree':0.59, 'ip_empty':0.0, 'ip_fire':0.01, 'ip_rock':0.40, 'ip_lake':0.0}
-    def __init__(self, n_row = 16, n_col = 16, p_tree=0.100, p_fire=0.001,
-                 forest_mode = 'stochastic', force_fire = True, boundary='invariant',
+    def __init__(self, n_row = 16, n_col = 16, p_tree=0.100, p_fire=0.001, forest_mode = 'stochastic',
+                 custom_grid=None, force_fire = True, boundary='invariant',
                  tree = '|', empty = '.', fire = '*', rock = '#', lake = 'O',
                  ip_tree = None, ip_empty = None, ip_fire = None, ip_rock = None, ip_lake = None): 
         self.n_row = n_row
@@ -169,6 +172,7 @@ class ForestFire():
         self.p_tree = p_tree
         self.p_fire = p_fire
         self.forest_mode = forest_mode
+        self.custom_grid = custom_grid
         self.force_fire = force_fire
         self.boundary = boundary
         # Cells
@@ -184,7 +188,6 @@ class ForestFire():
         self.ip_rock = ip_rock
         self.ip_lake = ip_lake
         self.grid_init()
-        self.grid_to_rgba()
     def simulate(self, times=10, delay=0.7):
         """ Computes n steps of the Automaton"""
         i = 0
@@ -292,11 +295,12 @@ class ForestFire():
         self.grid = new_grid
         return new_grid
     def render(self, title='Forest Fire Automaton'):
+        grid = self.grid_to_rgba()
         """Automaton visualization"""
         # Plot style
         sns.set_style('whitegrid')
         # Main Plot
-        plt.imshow(self.grid_to_rgba(), aspect='equal')
+        plt.imshow(grid, aspect='equal')
         # Title showing Reward
         plt.title(title, **self.title_font)
         # Modify Axes
@@ -320,7 +324,9 @@ class ForestFire():
     def grid_init(self):
         use_default = self.ip_tree is None and self.ip_empty is None and\
             self.ip_fire is None and self.ip_rock is None and self.ip_lake is None
-        if self.forest_mode == 'stochastic':
+        if self.custom_grid is not None:
+            self.grid_init_manually(self.custom_grid)
+        elif self.forest_mode == 'stochastic':
             self.grid = self.grid_random(**self.def_init_stoch) if use_default else\
                 self.grid_random(self.ip_tree, self.ip_empty, self.ip_fire, self.ip_rock, self.ip_lake)
         elif self.forest_mode == 'deterministic':
@@ -382,7 +388,6 @@ class ForestFire():
                 else:
                     raise ValueError('Error: Unidentified cell')
         rgba_mat = np.array(rgba_mat)
-        self.rgba_mat = rgba_mat
         return rgba_mat
     def is_bound_legal(self, row, col, grid=None):
         """Check borders of a target cell"""
