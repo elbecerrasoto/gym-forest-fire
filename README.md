@@ -1,7 +1,7 @@
 # Gym Forest Fire
 Forest Fire Environment Maker for OpenAI Gym.<br>
 *gym_forest_fire*<br>
-*version 2.1*
+*version 2.4*
 
 ![All Cells](pics/all_cells.svg)
 
