@@ -7,9 +7,7 @@ Created on Sun Apr 12 17:46:08 2020
 """
 
 import numpy as np
-
 import time
-
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -331,7 +329,7 @@ class ForestFire():
                 self.grid_random(self.ip_tree, self.ip_empty, self.ip_fire, self.ip_rock, self.ip_lake)
         elif self.forest_mode == 'deterministic':
             self.grid = self.grid_random(**self.def_init_determ) if use_default else\
-                self.grid_random(self.ip_tree, self.ip_empty, self.ip_fire, self.ip_rock, self.ip_lake)            
+                self.grid_random(self.ip_tree, self.ip_empty, self.ip_fire, self.ip_rock, self.ip_lake)
             # Force at least 1 fire
             if self.force_fire and np.all(self.grid != self.fire):
                 self.grid_add_1_fire()
@@ -356,8 +354,8 @@ class ForestFire():
         shared_mass = remaining_mass / non_assigned_probs if non_assigned_probs else 0.0
         init_probs[included_for_sharing] = shared_mass
         cells = (self.tree, self.empty, self.fire, self.rock, self.lake)
-        grid = np.random.choice(cells, self.n_row*self.n_col, p=init_probs).\
-            reshape(self.n_row,self.n_col)
+        grid = np.random.choice(cells, size=self.n_row*self.n_col, p=init_probs).\
+                    reshape(self.n_row,self.n_col)
         self.init_probabilities = dict(zip(('tree', 'empty', 'fire', 'rock', 'lake'), init_probs))
         return grid
     def grid_init_manually(self, grid):
@@ -406,7 +404,7 @@ class ForestFire():
         """Invariant Boundary Conditions"""
         n_row = grid.shape[0]
         n_col = grid.shape[1]
-        legal_bounds = self.is_bound_legal(row, col)     
+        legal_bounds = self.is_bound_legal(row, col)
         up_left = [grid[(row-1),(col-1)]]\
             if legal_bounds['up'] and legal_bounds['left'] else [self.rock]
         up_center = [grid[(row-1),col]]\

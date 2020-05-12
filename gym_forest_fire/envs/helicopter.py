@@ -18,10 +18,10 @@ class Helicopter(ForestFire):
     """
     Helicopter class
     simulates a Helicopter over a Firest Forest Automaton
-    
+
     Superclass for EnvForestFire
     For more please check the documentation of EnvForestFire
-    
+
     Examples
     --------
     >>> helicopter = Helicopter()
@@ -41,7 +41,7 @@ class Helicopter(ForestFire):
         kw_params={'n_row':n_row, 'n_col':n_col, 'p_tree':p_tree, 'p_fire':p_fire, 'forest_mode':forest_mode,
                  'custom_grid':custom_grid, 'force_fire':force_fire, 'boundary':boundary,
                  'tree':tree, 'empty':empty, 'fire':fire, 'rock':rock, 'lake':lake,
-                 'ip_tree':ip_tree, 'ip_empty':ip_empty, 'ip_fire':ip_fire, 'ip_rock':ip_rock, 'ip_lake':ip_lake}      
+                 'ip_tree':ip_tree, 'ip_empty':ip_empty, 'ip_fire':ip_fire, 'ip_rock':ip_rock, 'ip_lake':ip_lake}
         ForestFire.__init__(self,**kw_params)
         self.init_pos_row = init_pos_row
         self.init_pos_col = init_pos_col
@@ -55,7 +55,7 @@ class Helicopter(ForestFire):
             # Start aprox in the middle
             self.pos_col = self.n_col//2
         else:
-            self.pos_col = init_pos_col      
+            self.pos_col = init_pos_col
     def new_pos(self, movement):
         self.pos_row = self.pos_row if movement == 5\
             else self.pos_row if self.is_out_borders(movement, pos='row')\
@@ -127,17 +127,17 @@ class EnvMakerForestFire(Helicopter):
     version 2.1
     Implementation of a class to generate multiple Environments
     for a Reinforcement Learning task.
-    
-    All the created environments follow the    
+
+    All the created environments follow the
     Open AI gym API:
-    
-    env = EnvMakerForestFire()   
-        
+
+    env = EnvMakerForestFire()
+
     env.reset()
     env.step(action)
     env.render()
     env.close()
-    
+
     The created environment simulates a helicopter trying to extinguish a forest fire.
     The forest is simulated using a Forest Fire Automaton [Drossel and Schwabl (1992)] and
     the helicopter as a position on top of the lattice and some effect over the cells.
@@ -146,8 +146,8 @@ class EnvMakerForestFire(Helicopter):
     the effect is simply changing it to another cell type, usually from 'fire' to 'empty'
     and the reward is some function of the current state of the system,
     usually just counting cells types, multiplying for some weights (positive for trees and negative for fires) and adding up.
-    
-    The actions to move the helicopter are the natural numbers from 1 to 9, each representing a direction:        
+
+    The actions to move the helicopter are the natural numbers from 1 to 9, each representing a direction:
     1. Left-Up
     2. Up
     3. Right-Up
@@ -157,9 +157,9 @@ class EnvMakerForestFire(Helicopter):
     7. Left-Down
     8. Down
     9. Right-Down
-    
+
     Forest Fire Automaton Drossel and Schwabl (1992)
-    
+
     Three type of cells: TREE, EMPTY and FIRE
     At each time step and for each cell apply the following rules
     (order does not matter).
@@ -171,7 +171,7 @@ class EnvMakerForestFire(Helicopter):
             FIRE turns into EMPTY
         * With probability p:
             EMPTY turns into TREE                    Growth Rule
-            
+
     Also two more cells were added.
     ROCK, does not interacts with anything
         Used as a true death cell
@@ -179,26 +179,26 @@ class EnvMakerForestFire(Helicopter):
         Used on the invariant boundary conditions
     LAKE, does not interacts with anything
         Used on other classes that inherit from ForestFire
-    
+
     Deterministic mode: The automaton does not computes
     the Lighting and Growth rules, stops when there are
-    no more FIRE cells.    
-    
+    no more FIRE cells.
+
     Parameters
     ----------
-    
+
     env_mode : {'stochastic', 'deterinistic'}, default='stochastic'
         Main mode of the agent.
         - 'stochastic'
         Applies all the rules of the Forest Fire Automaton and sets the optional parameters (except if manually changed):
-        pos_row = ceil(n_row), pos_col = ceil(n_pos), effect = 'extinguish', moves_before_updating = ceil((n_row + n_col) / 4)                 
+        pos_row = ceil(n_row), pos_col = ceil(n_pos), effect = 'extinguish', moves_before_updating = ceil((n_row + n_col) / 4)
                  termination_type = 'continuing', ip_tree = 0.75, ip_empty = 0.25, ip_fire = 0.0, ip_rock = 0.0, ip_lake = 0.0
         - 'deterministic'
         Does not apply the stochastic rules of the Fire Forest Automaton, those are the Lighting and Growth rules.
         Also sets the following parameters:
-        pos_row = ceil(n_row), pos_col = ceil(n_pos), effect = 'clearing', moves_before_updating = 0                 
+        pos_row = ceil(n_row), pos_col = ceil(n_pos), effect = 'clearing', moves_before_updating = 0
         termination_type = 'no_fire', ip_tree = 0.59, ip_empty = 0.0, ip_fire = 0.01, ip_rock = 0.40, ip_lake = 0.0
-    n_row : int, default=16 
+    n_row : int, default=16
         Rows of the grid.
     n_col : int, default=16
         Columns of the grid.
@@ -213,23 +213,6 @@ class EnvMakerForestFire(Helicopter):
         Row position of the helicopter.
     pos_col : int, optional
         Column position of the helicopter.
-    effect : {'extinguish', 'clearing'}, optional
-        Effect of the helicopter over the cells.
-        - 'extinguish'
-        Whenever on top: transforms fire cell to empty.
-        - 'clearing'
-        Whenever on top: transforms tree cell to empty.
-        - 'building'
-        Whenever on top: transforms tree or empty cell to rock.     
-        - 'design'
-        Whenever on top: transforms tree or empty cell to rock.
-        Whenever on top: transforms rock to empty.
-        - 'multi'
-        Combines 'extinguish' and 'clearing' effects.
-        elif self.effect == 'building':
-            if current_cell == self.tree:
-                self.grid[row][col] = self.rock
-        elif self.effect == 'design':
     moves_before_updating : int, optional
         Steps the Agent can make before an Automaton actuliazation.
     termination_type : {'continuing', 'no_fire', 'steps', 'threshold'}, optional
@@ -240,7 +223,7 @@ class EnvMakerForestFire(Helicopter):
         Teminate whenever there are no more fire cells, this
         is the only value that works well with env_mode='deterministic'.
         - 'steps'
-        Terminate after a fixed number of steps have been made.   
+        Terminate after a fixed number of steps have been made.
         - 'threshold'
         Terminate after a fixed number of cells have been or are fire cells.
     steps_to_termination: Steps to termination, optional, default=128
@@ -276,31 +259,51 @@ class EnvMakerForestFire(Helicopter):
         Symbol to represent the rock cells.
     lake : object, default=0.99
         Symbol to represent the lake cells.
-   ip_tree : float, optional
+    sub_tree : {'tree', 'empty', 'fire', 'rock', 'lake'}, optional
+        Helicopter effect over the cell. To which cell substitute current cell.
+        Default in 'stochastic' mode is no effect (It is substituted by itself).
+        Default in 'deterministic' mode is 'empty'.
+    sub_empty : {'tree', 'empty', 'fire', 'rock', 'lake'}, optional
+        Helicopter effect over the cell. To which cell substitute current cell.
+        Default in 'stochastic' mode is no effect (It is substituted by itself).
+        Default in 'deterministic' mode is no effect (It is substituted by itself).
+    sub_fire : {'tree', 'empty', 'fire', 'rock', 'lake'}, optional
+        Helicopter effect over the cell. To which cell substitute current cell.
+        Default in 'stochastic' mode is 'empty'.
+        Default in 'deterministic' mode is no effect (It is substituted by itself).
+    sub_rock : {'tree', 'empty', 'fire', 'rock', 'lake'}, optional
+        Helicopter effect over the cell. To which cell substitute current cell.
+        Default in 'stochastic' mode is no effect (It is substituted by itself).
+        Default in 'deterministic' mode is no effect (It is substituted by itself).
+    sub_lake : {'tree', 'empty', 'fire', 'rock', 'lake'}, optional
+        Helicopter effect over the cell. To which cell substitute current cell.
+        Default in 'stochastic' mode is no effect (It is substituted by itself).
+        Default in 'deterministic' mode is no effect (It is substituted by itself).
+    ip_tree : float, optional
        Initialization probability of a tree cell.
-   ip_empty : float, optional
+    ip_empty : float, optional
        Initialization probability of an empty cell.
-   ip_fire : float, optional
+    ip_fire : float, optional
        Initialization probability of a fire cell.
        When in env_mode='deterministic', at least 1 fire cell is forced onto the grid.
-   ip_rock : float, optional
+    ip_rock : float, optional
        Initialization probability of a rock cell.
-   ip_lake : float, optional
+    ip_lake : float, optional
        Initialization probability of a lake cell.
-     
+
     Methods
     ----------
     EnvMakerForestFire.reset()
         Initializes the environment and returns the first observation
         Input :
-        Returns : 
+        Returns :
         tuple (grid, position)
             - grid
             np array with Automaton lattice
             - position
             np array with (row, col)
-            
-    EnvMakerForestFire.step(action) : 
+
+    EnvMakerForestFire.step(action) :
         Computes a step in the system
         Input :
             - action, int {1,2,3,4,5,6,7,8,9}
@@ -314,39 +317,39 @@ class EnvMakerForestFire(Helicopter):
             bool True is the task has already ended, False otherwise
             - infomation
             dict with extra data about the system
-    
+
     EnvMakerForestFire.render()
         Human friendly visualization of the system
         Input :
         Returns :
         matplotlib object
-    
+
     EnvMakerForestFire.close()
         Closes the environment, prints a message
         Input:
         Returns:
-        
+
     Examples
     --------
-    
+
     Instantiation
     >>> env = EnvMakerForestFire()
-    
+
     Starts the environment and gets first observation
     >>> grid, position = env.reset()
-    
+
     Visualization
     >>> env.render()
-    
+
     Performs 1 random step over the environment and assigns the results
     >>> import numpy as np
     >>> actions = list(env.movement_actions)
     >>> action = np.random.choice(actions)
     >>> obs, reward, terminated, info = env.step(action)
     >>> env.render()
-    
+
     Closes the environment
-    >>> env.close 
+    >>> env.close
 """
     # Metadata
     version = 'v2.4'
@@ -360,16 +363,16 @@ class EnvMakerForestFire(Helicopter):
     # Defaults
     def_steps_to_termination = 128
     def_fire_threshold = 1024
-    
+
     def __init__(self, env_mode = 'stochastic',
                  n_row = 16, n_col = 16, p_tree = 0.100, p_fire = 0.001, custom_grid = None,
-                 init_pos_row = None, init_pos_col = None, moves_before_updating = None,                 
+                 init_pos_row = None, init_pos_col = None, moves_before_updating = None,
                  termination_type = None, steps_to_termination = None, fire_threshold = None,
                  reward_type = 'cells', reward_tree = 1.0, reward_fire = -8.0, reward_empty = 0.0, reward_hit = 10.0,
                  tree = 0.77, empty = 0.66, fire = -1.0, rock = 0.88, lake = 0.99,
                  sub_tree = None, sub_empty = None, sub_fire = None, sub_rock = None, sub_lake = None,
                  ip_tree = None, ip_empty = None, ip_fire = None, ip_rock = None, ip_lake = None):
-        
+
         kw_params = {
             'init_pos_row': init_pos_row, 'init_pos_col': init_pos_col,
             'n_row': n_row, 'n_col': n_col, 'p_tree': p_tree, 'p_fire': p_fire,
@@ -380,25 +383,25 @@ class EnvMakerForestFire(Helicopter):
 
         # Helicopter Initialization
         Helicopter.__init__(self, **kw_params)
-        
+
         self.env_mode = env_mode
-        
+
         # Effect over cells, substitution rules
         self.sub_tree, self.sub_empty, self.sub_fire, self.sub_rock, self.sub_lake = sub_tree, sub_empty, sub_fire, sub_rock, sub_lake
-        
+
         # Automatic initialization according to env_mode. It sets: moves_before_updating, termination_type and default substitutions
         self.init_env_mode(moves_before_updating, termination_type)
-        
+
         # Initialization of the cell substitution rules dictionary, for the effects of the helicopter
         self.init_effects_dict()
-        
+
         # Counter for updating the grid
         self.remaining_moves = self.moves_before_updating
-        
+
         # Termination type specific params
         self.steps_to_termination = steps_to_termination
         self.fire_threshold = fire_threshold
-        
+
         # Reward params
         self.reward_type = reward_type
         self.reward_tree = reward_tree
@@ -406,21 +409,21 @@ class EnvMakerForestFire(Helicopter):
         self.reward_empty = reward_empty
         self.reward_hit = reward_hit
 
-    def init_env_mode(self, moves_before_updating, termination_type):        
+    def init_env_mode(self, moves_before_updating, termination_type):
         if self.env_mode == 'stochastic':
             speed = math.ceil((self.n_row + self.n_col) / 4)
             self.sub_fire = 'empty' if self.sub_fire is None else self.sub_fire
             self.moves_before_updating = speed if moves_before_updating is None else moves_before_updating
             self.termination_type = 'continuing' if termination_type is None else termination_type
-            
+
         elif self.env_mode == 'deterministic':
             self.sub_tree = 'empty' if self.sub_fire is None else self.sub_fire
             self.moves_before_updating = 0 if moves_before_updating is None else moves_before_updating
             self.termination_type = 'no_fire' if termination_type is None else termination_type
         else:
             raise ValueError('Unrecognized Environment Mode')
-            
-    def init_effects_dict(self):        
+
+    def init_effects_dict(self):
         effect_translation={
             'tree': self.tree,
             'empty': self.empty,
@@ -431,7 +434,7 @@ class EnvMakerForestFire(Helicopter):
         effect_over_empty = effect_translation['empty'] if self.sub_empty is None else effect_translation[self.sub_empty]
         effect_over_fire = effect_translation['fire'] if self.sub_fire is None else effect_translation[self.sub_fire]
         effect_over_rock = effect_translation['rock'] if self.sub_rock is None else effect_translation[self.sub_rock]
-        effect_over_lake = effect_translation['lake'] if self.sub_lake is None else effect_translation[self.sub_lake]        
+        effect_over_lake = effect_translation['lake'] if self.sub_lake is None else effect_translation[self.sub_lake]
         self.effects_dict={
             self.tree: effect_over_tree,
             self.empty: effect_over_empty,
@@ -450,12 +453,12 @@ class EnvMakerForestFire(Helicopter):
             delattr(self, 'reward')
         except AttributeError:
             pass
-        
+
     def reset(self):
         self.init_kw_params = {
             'env_mode': self.env_mode,
             'n_row': self.n_row, 'n_col': self.n_col, 'p_tree': self.p_tree, 'p_fire': self.p_fire, 'custom_grid': self.custom_grid,
-            'init_pos_row': self.init_pos_row, 'init_pos_col': self.init_pos_col, 'moves_before_updating': self.moves_before_updating,                 
+            'init_pos_row': self.init_pos_row, 'init_pos_col': self.init_pos_col, 'moves_before_updating': self.moves_before_updating,
             'termination_type': self.termination_type, 'steps_to_termination': self.steps_to_termination, 'fire_threshold': self.fire_threshold,
             'reward_type': self.reward_type, 'reward_tree': self.reward_tree, 'reward_fire': self.reward_fire, 'reward_empty': self.reward_empty, 'reward_hit': self.reward_hit,
             'tree': self.tree, 'empty': self.empty, 'fire': self.fire, 'rock': self.rock, 'lake': self.lake,
@@ -470,13 +473,13 @@ class EnvMakerForestFire(Helicopter):
         # Return observations, gym API
         self.obs = (self.grid, np.array([self.pos_row, self.pos_col]), np.array(self.remaining_moves))
         return self.obs
-    
+
     def step(self, action):
         """Must return tuple with
         numpy array, int reward, bool termination, dict info
         """
         self.steps += 1
-        
+
         if not self.terminated:
             # Is it time to update forest?
             if self.remaining_moves == 0:
@@ -486,16 +489,16 @@ class EnvMakerForestFire(Helicopter):
                 self.remaining_moves = self.moves_before_updating
             else:
                 self.remaining_moves -= 1
-                
-            # Move the helicopter    
+
+            # Move the helicopter
             self.new_pos(action)
-            # Register if it has moved towards fire 
+            # Register if it has moved towards fire
             current_cell = self.grid[self.pos_row][self.pos_col]
             self.hit = True if current_cell == self.fire else False
             self.total_hits += self.hit
             # Apply the powers of the helicopter over the grid (cell substitution)
             self.effect_over_cells()
-            # Calculate reward only in 'stochastic' mode 
+            # Calculate reward only in 'stochastic' mode
             self.reward = self.calculate_reward() if self.env_mode == 'stochastic' else 0.0
 
         else:
@@ -509,11 +512,11 @@ class EnvMakerForestFire(Helicopter):
 
         # Check for stopping condition
         self.terminated = self.is_task_terminated()
-        
+
         # Update some global info
         self.total_reward += self.reward
         self.total_burned += self.count_cells()[self.fire]
-        
+
         # Observations for gym API
         self.obs = (self.grid, np.array([self.pos_row, self.pos_col]), np.array(self.remaining_moves))
         # Info for gym API
@@ -521,17 +524,17 @@ class EnvMakerForestFire(Helicopter):
                 'total_hits': self.total_hits, 'total_burned': self.total_burned}
         # Gym API
         return (self.obs, self.reward, self.terminated, info)
-    
+
     def render(self):
         try:
             return Helicopter.render(self, title=f'Moves: {self.remaining_moves}\nReward: {self.reward}')
         except AttributeError:
             return Helicopter.render(self, title=f'Fores Fire Environment\nMode: {self.env_mode.title()}')
-        
+
     def close(self):
         print('Gracefully Exiting, come back soon')
         return True
-    
+
     def is_task_terminated(self):
         if self.termination_type == 'continuing':
             terminated = False
@@ -540,14 +543,14 @@ class EnvMakerForestFire(Helicopter):
             terminated = False if self.cell_counts[self.fire] != 0 else True
         elif self.termination_type == 'steps':
             if self.steps_to_termination is None: self.steps_to_termination = self.def_steps_to_termination
-            terminated = False if self.steps < self.steps_to_termination else True  
+            terminated = False if self.steps < self.steps_to_termination else True
         elif self.termination_type == 'threshold':
             if self.fire_threshold is None: self.fire_threshold = self.def_fire_threshold
-            terminated = False if self.total_burned < self.fire_threshold else True  
+            terminated = False if self.total_burned < self.fire_threshold else True
         else:
             raise ValueError('Unrecognized termination parameter')
         return terminated
-    
+
     def effect_over_cells(self):
         row = self.pos_row
         col = self.pos_col
@@ -557,8 +560,8 @@ class EnvMakerForestFire(Helicopter):
             if symbol == current_cell:
                 self.grid[row][col] = self.effects_dict[symbol]
                 break
-            
-    def calculate_reward(self):          
+
+    def calculate_reward(self):
         reward = 0.0
         self.count_cells()
         if self.reward_type == 'cells':
@@ -577,13 +580,13 @@ class EnvMakerForestFire(Helicopter):
         else:
             raise ValueError('Unrecognized reward type')
         return reward
-    
+
     def count_cells(self):
         cell_types, counts = np.unique(self.grid, return_counts=True)
         cell_counts = defaultdict(int, zip(cell_types, counts))
         self.cell_counts = cell_counts
         return cell_counts
-    
+
     def random_policy(self):
         actions = list(self.movement_actions)
         action = np.random.choice(actions)
