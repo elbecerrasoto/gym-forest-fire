@@ -13,7 +13,7 @@ import seaborn as sns
 from collections import defaultdict
 from forest_fire import ForestFire
 
-# Implements postions and movement and fire embeding
+# Implements positions and movement and fire embedding
 class Helicopter(ForestFire):
     """
     Helicopter class
@@ -124,7 +124,6 @@ class Helicopter(ForestFire):
 
 class EnvMakerForestFire(Helicopter):
     """
-    version 2.1
     Implementation of a class to generate multiple Environments
     for a Reinforcement Learning task.
 
