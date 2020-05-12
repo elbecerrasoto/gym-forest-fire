@@ -148,15 +148,15 @@ class EnvMakerForestFire(Helicopter):
     usually just counting cells types, multiplying for some weights (positive for trees and negative for fires) and adding up.
 
     The actions to move the helicopter are the natural numbers from 1 to 9, each representing a direction:
-    1. Left-Up
-    2. Up
-    3. Right-Up
-    4. Right
-    5. Don't move
-    6. Left
-    7. Left-Down
-    8. Down
-    9. Right-Down
+        1. Left-Up
+        2. Up
+        3. Right-Up
+        4. Right
+        5. Don't move
+        6. Left
+        7. Left-Down
+        8. Down
+        9. Right-Down
 
     Forest Fire Automaton Drossel and Schwabl (1992)
 
@@ -183,6 +183,12 @@ class EnvMakerForestFire(Helicopter):
     Deterministic mode: The automaton does not computes
     the Lighting and Growth rules, stops when there are
     no more FIRE cells.
+    
+    The observations gotten from the environment are a tuple of:
+        
+        1. 2D np-array with the current state of the cellular automaton grid.   
+        2. np-array with the position of the helicopter [row, col].   
+        3. np-array with the remaining moves of the helicopter until the next automaton update [moves].
 
     Parameters
     ----------

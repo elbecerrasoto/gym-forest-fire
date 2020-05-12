@@ -135,8 +135,9 @@ a numpy matrix.
 * 0.66 represents empty
 * -1.0 represents fire
 
-The observation returned by the the step method is a tuple of two elements,
-the first is the lattice and the second element is the postion of the helicopter in a [row, col] format.
+The observation returned by the the step method is a tuple of three elements,
+the first is the lattice the second element is the postion of the helicopter in a [row, col] format,
+and the third the remaining moves of the helicopter to update the cellular automaton. 
 
 The starting position of the helicopter is 8,8, just in the middle.
 The starting forest configuration is random,
@@ -156,10 +157,9 @@ env = gym.make('ForestFire-v0')
 ## Random Policy
 Implementing the random policy
 ```python
-import gym
-import gym_forest_fire
 import numpy as np
-
+import gym
+help(EnvMakerForestFire)
 env = gym.make('ForestFire-v0')
 
 # First observation
@@ -167,9 +167,9 @@ obs = env.reset()
 env.render()
 
 total_reward = 0
-for i in range(env.freeze * 100):
+for i in range(128):
   print('.', end='')
-  action = np.random.choice(list(env.movement_actions))
+  action = env.env.random_policy()
   obs, reward, done, info = env.step(action)
   total_reward += reward
   env.render()
@@ -198,7 +198,7 @@ grid[r_mid, c_mid] = symbols['rock']
 grid[2, c_mid-1] = symbols['tree']
 grid[2, c_mid] = symbols['rock']
 
-env = helicopter.EnvMakerForestFire(pos_row=r_mid, pos_col=c_mid, custom_grid=grid,
+env = EnvMakerForestFire(init_pos_row=r_mid, init_pos_col=c_mid, custom_grid=grid,
                                     p_fire=0.01, p_tree=0.75,
                                     sub_tree='empty',
                                     moves_before_updating=2,
