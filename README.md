@@ -1,7 +1,7 @@
 # Gym Forest Fire
 Forest Fire Environment Maker for OpenAI Gym.<br>
 *gym_forest_fire*<br>
-*version 2.1*
+*version 2.4*
 
 ![All Cells](pics/all_cells.svg)
 
@@ -18,10 +18,18 @@ cd gym-forest-fire
 pip install -e .
 ```
 
+3. Import and have fun
+```python
+import gym_forest_fire
+from gym_forest_fire import EnvMakerForestFire, ForestFire
+```
+
 ## Basic Info
 
 The package implements a tool for making environments<br>
 for Reinforcement Learning tasks.
+
+It also contains a preloaded environment and a forest fire cellular automaton simulator.
 
 The created environments follow the guidlines of the Open AI gym API,
 and would contain the following methods:
@@ -190,9 +198,10 @@ grid[r_mid, c_mid] = symbols['rock']
 grid[2, c_mid-1] = symbols['tree']
 grid[2, c_mid] = symbols['rock']
 
-env = helicopter.EnvMakerForestFire(pos_row=r_mid, pos_col=c_mid, custom_grid=grid2,
+env = helicopter.EnvMakerForestFire(pos_row=r_mid, pos_col=c_mid, custom_grid=grid,
                                     p_fire=0.01, p_tree=0.75,
-                                    effect='clearing', freeze=2,
+                                    sub_tree='empty',
+                                    moves_before_updating=2,
                                     reward_tree=3.0, reward_fire=-1.0,
                                     **symbols)
 env.reset()
