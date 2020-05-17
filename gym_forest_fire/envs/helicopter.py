@@ -209,7 +209,7 @@ class EnvMakerForestFire(Helicopter):
         Columns of the grid.
     p_tree : float, default=0.300
         'p' probability of a new tree.
-    p_fire : float, default=0.006
+    p_fire : float, default=0.003
         'f' probability of a tree catching fire.
     custom_grid : numpy like matrix, defult=None
         If matrix provided, it would be used as the starting lattice for the automaton
@@ -254,16 +254,32 @@ class EnvMakerForestFire(Helicopter):
         How much each individual empty cell gets rewarded.
     reward_hit : float, defualt=10.0
         Reward when moving to a fire cell.
-    tree : object, default=0.77
+    tree : object, default=0
         Symbol to represent the tree cells.
-    empty : object, default=0.66
+    empty : object, default=1
         Symbol to represent the empty cells.
-    fire : object, default=-1.0
+    fire : object, default=2
         Symbol to represent the fire cells.
-    rock : object, default=0.88
+    rock : object, default=3
         Symbol to represent the rock cells.
-    lake : object, default=0.99
+    lake : object, default=4
         Symbol to represent the lake cells.
+    observation_mode : {plain, one_hot, channels}, default='one_hot'
+        How to return the grid observation.
+        - plain
+        The step method returns the observation grid as a matrix of the the cells symbols.
+        - one_hot
+        The step method returns the observation grid as a matrix
+        with entries of the cells symbols on one hot encoding. In the following way:
+            tree: [1,0,0,0,0]
+            empty: [0,1,0,0,0]
+            fire: [0,0,1,0,0]     
+            rock: [0,0,0,1,0]    
+            lake: [0,0,0,0,1] 
+        - channels
+        The step method returns the observation grid as a ndarray of 5 channels (5 matrices).
+        A channel per cell type (5).
+        On each channel, `1` marks the prescence of that cell type at that location and `0` otherwise.           
     sub_tree : {'tree', 'empty', 'fire', 'rock', 'lake'}, optional
         Helicopter effect over the cell. To which cell substitute current cell.
         Default in 'stochastic' mode is no effect (It is substituted by itself).
@@ -370,11 +386,11 @@ class EnvMakerForestFire(Helicopter):
     def_fire_threshold = 1024
 
     def __init__(self, env_mode = 'stochastic',
-                 n_row = 16, n_col = 16, p_tree = 0.100, p_fire = 0.001, custom_grid = None,
+                 n_row = 16, n_col = 16, p_tree = 0.300, p_fire = 0.003, custom_grid = None,
                  init_pos_row = None, init_pos_col = None, moves_before_updating = None,
                  termination_type = None, steps_to_termination = None, fire_threshold = None,
                  reward_type = 'cells', reward_tree = 1.0, reward_fire = -8.0, reward_empty = 0.0, reward_hit = 10.0,
-                 tree = 0.77, empty = 0.66, fire = -1.0, rock = 0.88, lake = 0.99,
+                 tree = 0, empty = 1, fire = 2, rock = 3, lake = 4, observation_mode = 'one_hot',
                  sub_tree = None, sub_empty = None, sub_fire = None, sub_rock = None, sub_lake = None,
                  ip_tree = None, ip_empty = None, ip_fire = None, ip_rock = None, ip_lake = None):
 
@@ -413,6 +429,14 @@ class EnvMakerForestFire(Helicopter):
         self.reward_fire = reward_fire
         self.reward_empty = reward_empty
         self.reward_hit = reward_hit
+        
+        # Grid Observations and One Hot Encoding
+        self.observation_mode = observation_mode
+        self.onehot_translation = {self.tree: [1,0,0,0,0],
+                      self.empty: [0,1,0,0,0],
+                      self.fire: [0,0,1,0,0],
+                      self.rock: [0,0,0,1,0],
+                      self.lake: [0,0,0,0,1]}
 
     def init_env_mode(self, moves_before_updating, termination_type):
         if self.env_mode == 'stochastic':
@@ -466,7 +490,7 @@ class EnvMakerForestFire(Helicopter):
             'init_pos_row': self.init_pos_row, 'init_pos_col': self.init_pos_col, 'moves_before_updating': self.moves_before_updating,
             'termination_type': self.termination_type, 'steps_to_termination': self.steps_to_termination, 'fire_threshold': self.fire_threshold,
             'reward_type': self.reward_type, 'reward_tree': self.reward_tree, 'reward_fire': self.reward_fire, 'reward_empty': self.reward_empty, 'reward_hit': self.reward_hit,
-            'tree': self.tree, 'empty': self.empty, 'fire': self.fire, 'rock': self.rock, 'lake': self.lake,
+            'tree': self.tree, 'empty': self.empty, 'fire': self.fire, 'rock': self.rock, 'lake': self.lake, 'observation_mode': self.observation_mode,
             'sub_tree': self.sub_tree, 'sub_empty': self.sub_empty, 'sub_fire': self.sub_fire, 'sub_rock': self.sub_rock, 'sub_lake': self.sub_lake,
             'ip_tree': self.ip_tree, 'ip_empty': self.ip_empty, 'ip_fire': self.ip_fire, 'ip_rock': self.ip_rock, 'ip_lake': self.ip_lake
             }
@@ -476,7 +500,8 @@ class EnvMakerForestFire(Helicopter):
         # Restart global vars
         self.init_global_info()
         # Return observations, gym API
-        self.obs = (self.grid, np.array([self.pos_row, self.pos_col]), np.array(self.remaining_moves))
+        obs_grid = self.observation_grid()
+        self.obs = (obs_grid, np.array([self.pos_row, self.pos_col]), np.array([self.remaining_moves]))
         return self.obs
 
     def step(self, action):
@@ -523,7 +548,8 @@ class EnvMakerForestFire(Helicopter):
         self.total_burned += self.count_cells()[self.fire]
 
         # Observations for gym API
-        self.obs = (self.grid, np.array([self.pos_row, self.pos_col]), np.array(self.remaining_moves))
+        obs_grid = self.observation_grid()
+        self.obs = (obs_grid, np.array([self.pos_row, self.pos_col]), np.array([self.remaining_moves]))
         # Info for gym API
         info = {'steps': self.steps, 'total_reward': self.total_reward,
                 'total_hits': self.total_hits, 'total_burned': self.total_burned}
@@ -596,3 +622,28 @@ class EnvMakerForestFire(Helicopter):
         actions = list(self.movement_actions)
         action = np.random.choice(actions)
         return action
+    
+    def observation_grid(self):
+        if self.observation_mode == 'plain':
+            return self.grid
+        elif self.observation_mode == 'one_hot':
+            return self.get_onehot_forest()        
+        elif self.observation_mode == 'channels':
+            return self.get_channels_forest()
+        else:
+            raise ValueError("Bad Observation Mode.\nTry: {'plain', 'one_hot', 'channels'}")
+
+    def get_onehot_forest(self):
+        onehot_grid = self.grid.tolist()
+        for row in range(self.n_row):
+            for col in range(self.n_col):
+                current_cell = onehot_grid[row][col]
+                for key in self.onehot_translation:
+                    if key == current_cell:
+                        onehot_grid[row][col] = self.onehot_translation[key]
+                        break
+        return np.array(onehot_grid)
+    
+    def get_channels_forest(self):
+        grid = self.get_onehot_forest()
+        return np.array([grid[:,:,channel] for channel in range(np.shape(grid)[-1])])

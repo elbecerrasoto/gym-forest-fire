@@ -24,7 +24,7 @@ class ForestFireEnv0(gym.Env):
     maker_params = {'env_mode': 'stochastic',
                  'n_row': 16, 'n_col': 16, 'p_tree': 0.100, 'p_fire': 0.005,
                  'init_pos_row': 8, 'init_pos_col': 8,
-                 'termination_type': 'continuing', 'reward_type': 'cells' }
+                 'termination_type': 'continuing', 'reward_type': 'cells', 'observation_mode': 'plain'}
     cell_symbols = {'tree': 0.77, 'empty': 0.66, 'fire': -1.0, 'rock': 0.88, 'lake': 0.99}
     substitution_effects = {'sub_tree': None, 'sub_empty': None, 'sub_fire': 'empty', 'sub_rock': None, 'sub_lake': None}
     reward_values = {'reward_tree': 0.0, 'reward_fire': -1.0, 'reward_empty': 0.0, 'reward_hit': None,}
