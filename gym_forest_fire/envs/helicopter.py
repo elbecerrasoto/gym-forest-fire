@@ -279,7 +279,13 @@ class EnvMakerForestFire(Helicopter):
         - channels
         The step method returns the observation grid as a ndarray of 5 channels (5 matrices).
         A channel per cell type (5).
-        On each channel, `1` marks the prescence of that cell type at that location and `0` otherwise.           
+        On each channel, `1` marks the prescence of that cell type at that location and `0` otherwise.      
+        - channels3
+        Same as `'channels'`, but only returns the first three channels.
+        Useful when the environment will only yield tree, empty or fire cells.
+        - channels4
+        Same as `'channels'`, but only returns the first four channels.
+        Useful when the environment will only yield tree, empty, fire or rock cells.
     sub_tree : {'tree', 'empty', 'fire', 'rock', 'lake'}, optional
         Helicopter effect over the cell. To which cell substitute current cell.
         Default in 'stochastic' mode is no effect (It is substituted by itself).
@@ -558,9 +564,9 @@ class EnvMakerForestFire(Helicopter):
 
     def render(self):
         try:
-            return Helicopter.render(self, title=f'Moves: {self.remaining_moves}\nReward: {self.reward}')
+            return Helicopter.render(self, title=f'Moves: {self.remaining_moves}\nReward: {np.round(self.reward, 4)}')
         except AttributeError:
-            return Helicopter.render(self, title=f'Fores Fire Environment\nMode: {self.env_mode.title()}')
+            return Helicopter.render(self, title=f'Forest Fire Environment\nMode: {self.env_mode.title()}')
 
     def close(self):
         print('Gracefully Exiting, come back soon')
@@ -630,6 +636,10 @@ class EnvMakerForestFire(Helicopter):
             return self.get_onehot_forest()        
         elif self.observation_mode == 'channels':
             return self.get_channels_forest()
+        elif self.observation_mode == 'channels3':
+            return self.get_channels_forest()[:3]
+        elif self.observation_mode == 'channels4':
+            return self.get_channels_forest()[:4]
         else:
             raise ValueError("Bad Observation Mode.\nTry: {'plain', 'one_hot', 'channels'}")
 
