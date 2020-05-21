@@ -264,7 +264,7 @@ class EnvMakerForestFire(Helicopter):
         Symbol to represent the rock cells.
     lake : object, default=4
         Symbol to represent the lake cells.
-    observation_mode : {plain, one_hot, channels}, default='one_hot'
+    observation_mode : {'plain', 'one_hot', 'channels', 'channels3', 'channels4'}, default='one_hot'
         How to return the grid observation.
         - plain
         The step method returns the observation grid as a matrix of the the cells symbols.
