@@ -182,11 +182,11 @@ class EnvMakerForestFire(Helicopter):
     Deterministic mode: The automaton does not computes
     the Lighting and Growth rules, stops when there are
     no more FIRE cells.
-    
+
     The observations gotten from the environment are a tuple of:
-        
-        1. 2D np-array with the current state of the cellular automaton grid.   
-        2. np-array with the position of the helicopter [row, col].   
+
+        1. 2D np-array with the current state of the cellular automaton grid.
+        2. np-array with the position of the helicopter [row, col].
         3. np-array with the remaining moves of the helicopter until the next automaton update [moves].
 
     Parameters
@@ -273,13 +273,13 @@ class EnvMakerForestFire(Helicopter):
         with entries of the cells symbols on one hot encoding. In the following way:
             tree: [1,0,0,0,0]
             empty: [0,1,0,0,0]
-            fire: [0,0,1,0,0]     
-            rock: [0,0,0,1,0]    
-            lake: [0,0,0,0,1] 
+            fire: [0,0,1,0,0]
+            rock: [0,0,0,1,0]
+            lake: [0,0,0,0,1]
         - channels
         The step method returns the observation grid as a ndarray of 5 channels (5 matrices).
         A channel per cell type (5).
-        On each channel, `1` marks the prescence of that cell type at that location and `0` otherwise.      
+        On each channel, `1` marks the prescence of that cell type at that location and `0` otherwise.
         - channels3
         Same as `'channels'`, but only returns the first three channels.
         Useful when the environment will only yield tree, empty or fire cells.
@@ -435,7 +435,7 @@ class EnvMakerForestFire(Helicopter):
         self.reward_fire = reward_fire
         self.reward_empty = reward_empty
         self.reward_hit = reward_hit
-        
+
         # Grid Observations and One Hot Encoding
         self.observation_mode = observation_mode
         self.onehot_translation = {self.tree: [1,0,0,0,0],
@@ -628,12 +628,12 @@ class EnvMakerForestFire(Helicopter):
         actions = list(self.movement_actions)
         action = np.random.choice(actions)
         return action
-    
+
     def observation_grid(self):
         if self.observation_mode == 'plain':
             return self.grid
         elif self.observation_mode == 'one_hot':
-            return self.get_onehot_forest()        
+            return self.get_onehot_forest()
         elif self.observation_mode == 'channels':
             return self.get_channels_forest()
         elif self.observation_mode == 'channels3':
@@ -653,7 +653,7 @@ class EnvMakerForestFire(Helicopter):
                         onehot_grid[row][col] = self.onehot_translation[key]
                         break
         return np.array(onehot_grid)
-    
+
     def get_channels_forest(self):
         grid = self.get_onehot_forest()
         return np.array([grid[:,:,channel] for channel in range(np.shape(grid)[-1])])
