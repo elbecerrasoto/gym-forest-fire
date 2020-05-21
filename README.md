@@ -31,7 +31,7 @@ for Reinforcement Learning tasks.
 
 It also contains a preloaded environment and a forest fire cellular automaton simulator.
 
-The created environments follow the guidlines of the Open AI gym API,
+The created environments follow the guidelines of the Open AI gym API,
 and would contain the following methods:
 
 ``` python
