@@ -57,6 +57,7 @@ class Helicopter(ForestFire):
         else:
             self.pos_col = init_pos_col
     def new_pos(self, movement):
+        assert movement >= 1 and movement <= 9, 'Movement action should be between 1 and 9'
         self.pos_row = self.pos_row if movement == 5\
             else self.pos_row if self.is_out_borders(movement, pos='row')\
             else self.pos_row - 1 if movement in [1,2,3]\
@@ -505,6 +506,8 @@ class EnvMakerForestFire(Helicopter):
         self.__init__(**self.init_kw_params)
         # Restart global vars
         self.init_global_info()
+        # Calculate actions set from init position
+        self.get_legal_actions()
         # Return observations, gym API
         obs_grid = self.observation_grid()
         self.obs = (obs_grid, np.array([self.pos_row, self.pos_col]), np.array([self.remaining_moves]))
@@ -515,6 +518,7 @@ class EnvMakerForestFire(Helicopter):
         numpy array, int reward, bool termination, dict info
         """
         self.steps += 1
+        self.get_legal_actions()
 
         if not self.terminated:
             # Is it time to update forest?
@@ -625,7 +629,8 @@ class EnvMakerForestFire(Helicopter):
         return cell_counts
 
     def random_policy(self):
-        actions = list(self.movement_actions)
+        """Retunrs action using the random policy, unif dist over actions"""
+        actions = list(self.legal_actions)
         action = np.random.choice(actions)
         return action
 
@@ -657,3 +662,27 @@ class EnvMakerForestFire(Helicopter):
     def get_channels_forest(self):
         grid = self.get_onehot_forest()
         return np.array([grid[:,:,channel] for channel in range(np.shape(grid)[-1])])
+
+    def get_legal_actions(self):
+        legal = self.is_bound_legal(self.pos_row, self.pos_col)
+
+        up_left_acts = {5,6,8,9}
+        up_right_acts = {4,5,7,8}
+        down_left_acts = {2,3,5,6}
+        down_right_acts = {1,2,4,5}
+        up_center_acts = {4,5,6,7,8,9}
+        down_center_acts = {1,2,3,4,5,6}
+        middle_left_acts = {2,3,5,6,8,9}
+        middle_right_acts = {1,2,4,5,7,8}
+
+        self.legal_actions =\
+            up_left_acts if not legal['up'] and not legal['left'] else\
+            up_right_acts if not legal['up'] and not legal['right'] else\
+            down_left_acts if not legal['down'] and not legal['left'] else\
+            down_right_acts if not legal['down'] and not legal['right'] else\
+            up_center_acts if not legal['up'] else\
+            down_center_acts if not legal['down'] else\
+            middle_left_acts if not legal['left'] else\
+            middle_right_acts if not legal['right'] else\
+            self.movement_actions
+        return self.legal_actions
