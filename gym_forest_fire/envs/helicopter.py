@@ -265,7 +265,7 @@ class EnvMakerForestFire(Helicopter):
         Symbol to represent the rock cells.
     lake : object, default=4
         Symbol to represent the lake cells.
-    observation_mode : {'plain', 'one_hot', 'channels', 'channels3', 'channels4'}, default='one_hot'
+    observation_mode : {'plain', 'one_hot', 'one_hot3', 'one_hot4', channels', 'channels3', 'channels4'}, default='one_hot'
         How to return the grid observation.
         - plain
         The step method returns the observation grid as a matrix of the the cells symbols.
@@ -277,6 +277,10 @@ class EnvMakerForestFire(Helicopter):
             fire: [0,0,1,0,0]
             rock: [0,0,0,1,0]
             lake: [0,0,0,0,1]
+        - one_hot3
+        Same as `'one_hot'`, but only returns the coding for tree, empty and fire.
+        - one_hot4
+        Same as `'one_hot'`, but only returns the coding for tree, empty, fire and rock.
         - channels
         The step method returns the observation grid as a ndarray of 5 channels (5 matrices).
         A channel per cell type (5).
@@ -639,6 +643,10 @@ class EnvMakerForestFire(Helicopter):
             return self.grid
         elif self.observation_mode == 'one_hot':
             return self.get_onehot_forest()
+        elif self.observation_mode == 'one_hot3':
+            return self.get_onehot_forest()[:,:,:3]
+        elif self.observation_mode == 'one_hot4':
+            return self.get_onehot_forest()[:,:,:4]
         elif self.observation_mode == 'channels':
             return self.get_channels_forest()
         elif self.observation_mode == 'channels3':
