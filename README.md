@@ -169,7 +169,7 @@ env.render()
 total_reward = 0
 for i in range(128):
   print('.', end='')
-  action = env.env.random_policy()
+  action = env.random_policy()
   obs, reward, done, info = env.step(action)
   total_reward += reward
   env.render()
