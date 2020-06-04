@@ -522,7 +522,6 @@ class EnvMakerForestFire(Helicopter):
         numpy array, int reward, bool termination, dict info
         """
         self.steps += 1
-        self.get_legal_actions()
 
         if not self.terminated:
             # Is it time to update forest?
@@ -536,6 +535,8 @@ class EnvMakerForestFire(Helicopter):
 
             # Move the helicopter
             self.new_pos(action)
+            # Get new legal positions
+            self.get_legal_actions()
             # Register if it has moved towards fire
             current_cell = self.grid[self.pos_row][self.pos_col]
             self.hit = True if current_cell == self.fire else False
@@ -636,6 +637,24 @@ class EnvMakerForestFire(Helicopter):
         """Retunrs action using the random policy, unif dist over actions"""
         actions = list(self.legal_actions)
         action = np.random.choice(actions)
+        return action
+
+    def heuristic_policy(self):
+        """Agent moves towards Fire (only 1-step lookahead), else random"""
+        actions_to_coords = {1:(-1,-1), 2:(-1,0), 3:(-1,1),
+                         4:(0,-1), 5:(0,0), 6:(0,1),
+                         7:(1,-1), 8:(1,0), 9:(1,1)}
+        fire_actions = []
+        for action in self.legal_actions:
+            row_off, col_off = actions_to_coords[action]
+            row = self.pos_row + row_off
+            col = self.pos_col + col_off
+            if self.grid[row][col] == self.fire:
+                fire_actions.append(action)
+        if fire_actions and self.remaining_moves != 0:
+            action = np.random.choice(fire_actions)
+        else:
+            action = self.random_policy()
         return action
 
     def observation_grid(self):
