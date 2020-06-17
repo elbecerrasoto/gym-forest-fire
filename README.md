@@ -45,6 +45,18 @@ env.render()
 env.close()
 ```
 
+It also contains two extra methods for generating actions,
+from a random or heuristic policy. The heuristic merely follows the fire, when the CA is not updating it drives the helicopter to any fire cell, if it is updating it goes to a tree cell with fire neighbors, random otherwise.
+
+``` python
+from gym_forest_fire import EnvMakerForestFire
+env = EnvMakerForestFire()   
+obs = env.reset()
+action_random = env.random_policy()
+action_heuristic = env.heuristic_policy()
+obs, reward, done, info = env.step(action_heuristic)
+```
+
 The created environment simulates a helicopter trying to extinguish a forest fire.
 
 The forest is simulated using a Forest Fire Automaton [Drossel and Schwabl (1992)] and<br>
@@ -120,7 +132,7 @@ Each number from 1 to 9 represents one direction.
 9. Right-Down
 
 The helicopter can move 8 times before the next computation
-of the forest fire automaton. Basically, the helicopter can
+of the forest fire automaton, then moving 1 more time after the updating. This is iterated over and over until termination. Basically, the helicopter can
 travel half the distance of the forest before the next actualization.
 This roughly represents the helicopter's speed.
 

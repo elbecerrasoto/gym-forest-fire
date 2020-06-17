@@ -329,20 +329,22 @@ class EnvMakerForestFire(Helicopter):
         Initializes the environment and returns the first observation
         Input :
         Returns :
-        tuple (grid, position)
+        tuple (grid, position, moves)
             - grid
             np array with Automaton lattice
             - position
             np array with (row, col)
+            - moves
+            np array with (remaining_moves)
 
     EnvMakerForestFire.step(action) :
         Computes a step in the system
         Input :
             - action, int {1,2,3,4,5,6,7,8,9}
         Returns :
-        {observation, reward, termination, information}
+        tuple (observation, reward, termination, information)
             - observation
-            tuple with observations from the environment (grid, position)
+            tuple with observations from the environment (grid, position, moves)
             - reward
             float with the reward for the actions
             - termination
@@ -354,12 +356,26 @@ class EnvMakerForestFire(Helicopter):
         Human friendly visualization of the system
         Input :
         Returns :
-        matplotlib object
+            - matplotlib object
 
     EnvMakerForestFire.close()
-        Closes the environment, prints a message
+    Closes the environment, prints a message
+    Input:
+    Returns:
+
+    EnvMakerForestFire.random_policy()
+        Returns an action using the random policy
+        (Uniform sampling of available actions)
+        Input :
+        Returns : 
+            - action, int {1,2,3,4,5,6,7,8,9}
+
+    EnvMakerForestFire.heuristic_policy()
+        Returns an action using an heuristic policy
+        (Follow the fire, random otherwise)
         Input:
         Returns:
+            - action, int {1,2,3,4,5,6,7,8,9}
 
     Examples
     --------
@@ -644,15 +660,28 @@ class EnvMakerForestFire(Helicopter):
         actions_to_coords = {1:(-1,-1), 2:(-1,0), 3:(-1,1),
                          4:(0,-1), 5:(0,0), 6:(0,1),
                          7:(1,-1), 8:(1,0), 9:(1,1)}
+        actions_to_neighbor_actions = {1:{2,4,5}, 2:{1,3,4,5,6}, 3:{2,5,6},
+                                       4:{1,2,5,7,8}, 5:{1,2,3,4,6,7,8,9}, 6:{2,3,5,6,8,9},
+                                       7:{4,5,8}, 8:{4,5,6,7,9}, 9:{5,6,8}}
         fire_actions = []
+        tree_actions = []
         for action in self.legal_actions:
             row_off, col_off = actions_to_coords[action]
             row = self.pos_row + row_off
             col = self.pos_col + col_off
             if self.grid[row][col] == self.fire:
                 fire_actions.append(action)
+            if self.grid[row][col] == self.tree:
+                tree_actions.append(action)
         if fire_actions and self.remaining_moves != 0:
             action = np.random.choice(fire_actions)
+        elif fire_actions and self.remaining_moves == 0:
+            positions_in_danger = set()
+            for fire_action in fire_actions:
+                positions_in_danger |= actions_to_neighbor_actions[fire_action]
+            positions_in_danger &= set(tree_actions)
+            if positions_in_danger:
+                action = np.random.choice(list(positions_in_danger))
         else:
             action = self.random_policy()
         return action
