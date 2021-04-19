@@ -3,6 +3,12 @@ Forest Fire Environment Maker for OpenAI Gym.<br>
 *gym_forest_fire*<br>
 *version 2.4*
 
+## Warning
+### This repository is depracated.
+:warning: :warning: :bomb: 
+**You should use [gym-cellular-automata](https://github.com/elbecerrasoto/gym-cellular-automata) instead**
+
+
 ![All Cells](pics/all_cells.svg)
 
 ## Installation
